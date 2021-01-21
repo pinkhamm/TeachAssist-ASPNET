@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Widget Editor";
+}
+
+<div id="action-menu">
+    <button id="cancel_widget_btn" onclick="window.location = '@Url.Action("Index", "Dashboard")'">Cancel</button>
+    <button id="save_widget_btn" onclick="window.location = '@Url.Action("SaveWidget", "WidgetEditor")'">Save Widget</button>
+    <!-- Confirm with user first before deleting -->
+    <button id="delete_widget_btn" onclick="window.location = '@Url.Action("DeleteWidget", "WidgetEditor")'">Delete Widget</button>
+</div>
+<div id="widget-editor">
+    <div id="widget-editor-area">
+    </div>
+    <div id="widget-editor-side-bar">
+        <img id="add_output_btn" src="~/Images/addoutput.png" alt="addOutput_btn">
+        <img id="avg_output_btn" src="~/Images/avgoutput.png" alt="avgOutput_btn">
+        <img id="bar_graph_btn" src="~/Images/bargraph.png" alt="barGraph_btn">
+        <img id="pie_chart_btn" src="~/Images/piechart.png" alt="pieChart_btn">
+    </div>
+</div>

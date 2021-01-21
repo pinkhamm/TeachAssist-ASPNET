@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div id="action-menu">
+
+    <button id="new_widget_btn" onclick="window.location = '@Url.Action("Index", "WidgetEditor")'">New Widget</button>
+    <button id="save_classroom_btn">Save Classroom</button>
+    <button id="load_classroom_btn">Load Classroom</button>
+</div>
+<div id="dashboard">
+    <div id="widget-grid-area">
+
+    </div>
+    <div id="widget-selection-menu">
+        <p>No Saved Widgets</p>
+    </div>
+</div>
