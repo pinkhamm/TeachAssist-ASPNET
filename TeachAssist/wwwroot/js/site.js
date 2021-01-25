@@ -2,3 +2,19 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+var widget = document.querySelector("#widget");
+var containedArea = document.querySelector("#widget-editor-area");
+
+var active = false;
+
+var currentX;
+var currentY;
+
+var initialX;
+var initialY;
+
+var xOffset = 0;
+var yOffset = 0;
+
+
