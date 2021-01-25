@@ -8,27 +8,20 @@ namespace TeachAssist.Models
 {
     public class Widget
     {
-        public int Id { get; set; }
+        public int Id { get;}
+        public string Name { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public WidgetCreationHelper[] WidgetCreationHelpers { get; set; }
 
-        public void LoadClassroom(int ID)
+        public Widget(int id, string name, int width, int height)
         {
-            // Temporary code.  Delete after finishing real code
-
-            this.Id = ID;
-
-
-            // Connect to DB and load Classroom data for ID
-
-            // Set new ID and Widgets
+            this.Id = id;
+            this.Name = name;
+            this.Width = width;
+            this.Height = height;
         }
 
-        public void SaveClassroom()
-        {
-            // Save the currently loaded widgets to the DB with current ID
-        }
     }
 }
 

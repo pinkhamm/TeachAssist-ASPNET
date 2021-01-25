@@ -16,8 +16,8 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index">Teach-Assist <i style="font-size: 10px">grading made easy</i></a>
             </div>
             <div class="user-menu">
-                <button id="user-account-btn">Username</button>
-                <button id="user-settings-btn"><img id="user-settings-icon" src="~/Images/user-settings-icon.png" alt="Account Settings"></button>
+                <button id="user-account-btn" onclick="window.location = '@Url.Action("Index", "Account")'">Username</button>
+                <button id="user-settings-btn" onclick="window.location = '@Url.Action("Index", "Account")'"><img id="user-settings-icon" src="~/Images/user-settings-icon.png" alt="Account Settings"></button>
             </div>
         </nav>
     </header>
