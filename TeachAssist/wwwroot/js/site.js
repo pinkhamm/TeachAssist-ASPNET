@@ -4,7 +4,7 @@
 // Write your JavaScript code.
 
 var widget = document.querySelector("#widget");
-var containedArea = document.querySelector("#containedArea");
+var containedArea = document.querySelector("#widget-editor-area");
 
 var active = false;
 
