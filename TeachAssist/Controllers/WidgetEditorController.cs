@@ -10,6 +10,7 @@ namespace TeachAssist.Controllers
     public class WidgetEditorController : Controller
     {
         Widget widget = new Widget(0, "New Widget", 0, 0);
+
         public IActionResult Index()
         {
             return View();
