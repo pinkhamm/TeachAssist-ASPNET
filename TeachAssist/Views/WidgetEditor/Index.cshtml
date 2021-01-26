@@ -2,6 +2,22 @@
     ViewData["Title"] = "Widget Editor";
 }
 
+@section Scripts {
+    <script src="~/js/JQuery/jquery-1.12.4.js"></script>
+    <script src="~/js/JQuery/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            $("#add_output_btn").draggable();
+            $("#avg_output_btn").draggable();
+            $("#bar_graph_btn").draggable();
+            $("#pie_chart_btn").draggable();
+
+            $iteration = 0;
+        })</script>
+
+}
+
 <div id="action-menu">
     <button id="cancel_widget_btn" onclick="window.location = '@Url.Action("Index", "Dashboard")'">Cancel</button>
     <button id="save_widget_btn" onclick="window.location = '@Url.Action("SaveWidget", "WidgetEditor")'">Save Widget</button>
