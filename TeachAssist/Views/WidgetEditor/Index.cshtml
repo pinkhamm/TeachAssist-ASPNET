@@ -8,10 +8,26 @@
 
     <script>
         $(function () {
-            $("#add_output_btn").draggable();
-            $("#avg_output_btn").draggable();
-            $("#bar_graph_btn").draggable();
-            $("#pie_chart_btn").draggable();
+            $("#add_output_btn").draggable({
+                revert: true
+            });
+
+
+
+
+            $("#avg_output_btn").draggable({ revert: true });
+            $("#bar_graph_btn").draggable({ revert: true });
+            $("#pie_chart_btn").draggable({ revert: true });
+
+
+            $("#widget-editor-area").droppable({
+                accept: "#add_output_btn",
+                classes: {
+                    "ui-droppable-active": "ui-state-active",
+                    "ui-droppable-hover" : "ui-state-hover"
+                }
+            })
+
 
             $iteration = 0;
         })</script>
