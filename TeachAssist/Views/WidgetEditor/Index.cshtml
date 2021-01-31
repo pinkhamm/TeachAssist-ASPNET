@@ -9,22 +9,43 @@
     <script>
         $(function () {
             $("#add_output_btn").draggable({
-                revert: true
+                revert: "valid",
             });
 
+            $("#avg_output_btn").draggable({
+                revert: "valid"
+            });
 
+            $("#bar_graph_btn").draggable({
+                revert: "valid"
+            });
 
+            $("#pie_chart_btn").draggable({
+                revert: "valid"
+            });
 
-            $("#avg_output_btn").draggable({ revert: true });
-            $("#bar_graph_btn").draggable({ revert: true });
-            $("#pie_chart_btn").draggable({ revert: true });
-
+            $(".ui-draggable-handle.dropped").draggable({
+                containment: "#widget-editor-area"
+            });
 
             $("#widget-editor-area").droppable({
-                accept: "#add_output_btn",
+                accept: "#add_output_btn, #avg_output_btn, #bar_graph_btn, #pie_chart_btn",
                 classes: {
                     "ui-droppable-active": "ui-state-active",
                     "ui-droppable-hover" : "ui-state-hover"
+                },
+
+                drop: function (event, ui) {
+                   //$(ui.draggable).addClass("dropped");
+                    if ($(ui.draggable).hasClass('copied')) return
+                    var droppedItem = $(ui.draggable).clone().addClass('copied').css({
+                        position: "relative",
+                        top: $(ui.helper).position().top - $(this).position().top,
+                        left: $(ui.helper).position().left - $(this).position().left
+                    }).draggable({
+                        containment: "#widget-editor-area"
+                    });
+                    $(this).append(droppedItem);
                 }
             })
 
@@ -44,10 +65,10 @@
     <div id="widget-editor-area">
     </div>
     <div id="widget-editor-side-bar">
-        <img id="add_output_btn" src="~/Images/addoutput.png" alt="addOutput_btn">
-        <img id="avg_output_btn" src="~/Images/avgoutput.png" alt="avgOutput_btn">
-        <img id="bar_graph_btn" src="~/Images/bargraph.png" alt="barGraph_btn">
-        <img id="pie_chart_btn" src="~/Images/piechart.png" alt="pieChart_btn">
+        <img id="add_output_btn" src="~/Images/addoutput.png" alt="addOutput_btn" class="">
+        <img id="avg_output_btn" src="~/Images/avgoutput.png" alt="avgOutput_btn" class="">
+        <img id="bar_graph_btn" src="~/Images/bargraph.png" alt="barGraph_btn" class="">
+        <img id="pie_chart_btn" src="~/Images/piechart.png" alt="pieChart_btn" class="">
     </div>
 
 </div>
