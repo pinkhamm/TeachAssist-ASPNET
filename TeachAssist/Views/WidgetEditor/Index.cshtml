@@ -9,19 +9,19 @@
     <script>
         $(function () {
             $("#add_output_btn").draggable({
-                revert: "valid",
+                revert: true,
             });
 
             $("#avg_output_btn").draggable({
-                revert: "valid"
+                revert: true,
             });
 
             $("#bar_graph_btn").draggable({
-                revert: "valid"
+                revert: true,
             });
 
             $("#pie_chart_btn").draggable({
-                revert: "valid"
+                revert: true,
             });
 
             $(".ui-draggable-handle.dropped").draggable({
@@ -38,12 +38,15 @@
                 drop: function (event, ui) {
                    //$(ui.draggable).addClass("dropped");
                     if ($(ui.draggable).hasClass('copied')) return
+
+
                     var droppedItem = $(ui.draggable).clone().addClass('copied').css({
+
                         position: "relative",
-                        top: $(ui.helper).position().top - $(this).position().top,
-                        left: $(ui.helper).position().left - $(this).position().left
-                    }).draggable({
-                        containment: "#widget-editor-area"
+                        top: $(this).position().top,
+                        left: $(this).position().left}).draggable({
+                            containment: "#widget-editor-area"
+
                     });
                     $(this).append(droppedItem);
                 }
