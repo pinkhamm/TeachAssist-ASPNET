@@ -27,7 +27,6 @@
                     if (ui.draggable.hasClass("sidebar_widget")) {
                         var $item = $(ui.draggable).clone().appendTo("#widget-editor-area");
                         $item.removeClass("sidebar_widget");
-
                         //if ($item.hasClass("#add_output_btn")) {
                         //    console.log("has class");
                         //}
@@ -37,6 +36,7 @@
 
                     function makeDraggable($item) {
                         $item.draggable({
+                            grid: [20, 20],
                             containment: "#widget-editor-area",
                             start: function () {},
                             stop: function () {
