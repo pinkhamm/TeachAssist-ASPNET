@@ -10,11 +10,13 @@
         $(function () {
 
             $(".sidebar_widget").draggable({
+                helper: "clone",
                 revert: "invalid",
                 appendTo: "#widget-editor-area",
-                helper: "clone",
                 cursor: "move",
-                start: function () { },
+                start: function () {
+                    console.log("dragging")
+                },
                 stop: function () {
                     console.log('stopped')
                 },
@@ -22,10 +24,21 @@
 
             $("#widget-editor-area").droppable({
                 accept: ".sidebar_widget",
+
                 drop: function (event, ui) {
 
                     if (ui.draggable.hasClass("sidebar_widget")) {
-                        var $item = $(ui.draggable).clone().appendTo("#widget-editor-area");
+
+
+
+                        var $item = $(ui.draggable).clone().appendTo("#widget-editor-area").css({
+                            position: 'absolute',
+                        });
+
+
+
+
+
                         $item.removeClass("sidebar_widget");
                         //if ($item.hasClass("#add_output_btn")) {
                         //    console.log("has class");
