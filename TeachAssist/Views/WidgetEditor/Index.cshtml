@@ -24,31 +24,41 @@
                 revert: true,
             });
 
-            $(".ui-draggable-handle.dropped").draggable({
-                containment: "#widget-editor-area"
-            });
-
             $("#widget-editor-area").droppable({
-                accept: "#add_output_btn, #avg_output_btn, #bar_graph_btn, #pie_chart_btn",
-                classes: {
-                    "ui-droppable-active": "ui-state-active",
-                    "ui-droppable-hover" : "ui-state-hover"
-                },
-
                 drop: function (event, ui) {
-                   //$(ui.draggable).addClass("dropped");
-                    if ($(ui.draggable).hasClass('copied')) return
+
+                    if (ui.draggable.hasClass("sidebar_widget")) {
+                        var $item = $(ui.draggable).clone();
+                        $item.removeClass("sidebar_widget");
+
+                        if ($item.hasClass("#add_output_btn")) {
+                            console.log("has class");
+                        }
+
+                        $(this).append($item);
+                        makeDraggable($item);
+                    }
+
+                    function makeDraggable($item) {
+                        $item.draggable({
+                            containment: "#widget-editor-area",
+                            start: function () {containment: "#widget-editor-area"},
+                            stop: function () {
+                                console.log('stopped')
+                            }
+                        });
+                    }
+
+                        $(".sidebar_widget").draggable({
+                            appendTo: "#widget-editor-area",
+                            helper: "clone",
+                            start: function () { },
+                            stop: function () {
+                                console.log('stopped')
+                            },
+                        });
 
 
-                    var droppedItem = $(ui.draggable).clone().addClass('copied').css({
-
-                        position: "relative",
-                        top: $(this).position().top,
-                        left: $(this).position().left}).draggable({
-                            containment: "#widget-editor-area"
-
-                    });
-                    $(this).append(droppedItem);
                 }
             })
 
@@ -68,10 +78,10 @@
     <div id="widget-editor-area">
     </div>
     <div id="widget-editor-side-bar">
-        <img id="add_output_btn" src="~/Images/addoutput.png" alt="addOutput_btn" class="">
-        <img id="avg_output_btn" src="~/Images/avgoutput.png" alt="avgOutput_btn" class="">
-        <img id="bar_graph_btn" src="~/Images/bargraph.png" alt="barGraph_btn" class="">
-        <img id="pie_chart_btn" src="~/Images/piechart.png" alt="pieChart_btn" class="">
+        <img class="sidebar_widget" id="add_output_btn" src="~/Images/addoutput.png" alt="addOutput_btn">
+        <img class="sidebar_widget" id="avg_output_btn" src="~/Images/avgoutput.png" alt="avgOutput_btn">
+        <img class="sidebar_widget" id="bar_graph_btn" src="~/Images/bargraph.png" alt="barGraph_btn">
+        <img class="sidebar_widget" id="pie_chart_btn" src="~/Images/piechart.png" alt="pieChart_btn">
     </div>
 
 </div>
