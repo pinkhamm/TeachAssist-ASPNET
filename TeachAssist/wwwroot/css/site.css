@@ -147,17 +147,6 @@ body {
     margin-left: 0.5%;
 }
 
-#widget-editor-area.ui-droppable-hover {
-    float: left;
-    background-color: white;
-    border: 4px dashed green;
-    border-radius: 5px;
-    min-height: 500px;
-    height: 100%;
-    width: 80%;
-    margin-left: 0.5%;
-}
-
 #widget-editor-side-bar {
     display: inline;
     float: right;
