@@ -15,7 +15,23 @@ a {
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
-  border-color: #1861ac;
+  border: #1861ac;
+}
+
+#user-account-btn{
+    height: 65%;
+    margin-right: 20px;
+    border: none;
+    color: #404040;
+    background-color: #929eba;
+}
+
+#user-settings-btn{
+    height: 65%;
+    margin-right: 20px;
+    border: none;
+    color: #404040;
+    background-color: #929eba;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -81,9 +97,9 @@ body {
 
 #action-menu {
     position: relative;
-    background-color: white;
-    border: 4px groove black;
-    border-radius: 5px;
+    background-color: rgba(200,217,217,1);
+    border: none;
+    border-radius: 0px;
     margin-top: 5px;
     margin-left: 0.5%;
     margin-bottom: 0.5%;
@@ -98,6 +114,10 @@ body {
     #action-menu button {
         height: 65%;
         margin-right: 20px;
+        border: none;
+        color: #404040;
+        background-color: #929eba;
+        
     }
 
 /* DASHBOARD SPECIFIC - MAYBE MOVE TO SEPARATE STYLESHEET
@@ -121,8 +141,8 @@ body {
     display: inline;
     float: right;
     background-color: white;
-    border: 4px groove black;
-    border-radius: 5px;
+    border: none;
+    border-radius: 0px;
     min-height: 300px;
     height: 100%;
     width: 15%;
@@ -151,8 +171,8 @@ body {
     display: inline;
     float: right;
     background-color: white;
-    border: 4px groove black;
-    border-radius: 5px;
+    border: none;
+    border-radius: 0px;
     min-height: 300px;
     height: 100%;
     width: 15%;
