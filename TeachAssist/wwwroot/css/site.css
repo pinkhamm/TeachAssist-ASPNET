@@ -164,7 +164,6 @@ body {
     min-height: 500px;
     height: 100%;
     width: 80%;
-    margin-left: 0.5%;
 }
 
 #widget-editor-side-bar {
@@ -191,12 +190,15 @@ body {
     cursor: grab;
 }
 
-table, td, th { 
+table, td, th {
+    padding: 8px;
     border: 1px solid black;
 }
 
 table {
     border-collapse: collapse;
+    margin: 0.5;
+    padding: 0.5em;
 }
 
 #name_of_table{
@@ -205,5 +207,14 @@ table {
 }
 
 caption{
+    padding: 5px;
     border: 1px solid black;
 }
+
+#default_table{
+    position: absolute;
+}
+
+/*#default_table:hover {
+    cursor: grab;
+}*/
