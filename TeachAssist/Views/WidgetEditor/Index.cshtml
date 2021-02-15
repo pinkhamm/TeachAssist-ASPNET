@@ -95,16 +95,17 @@
             var myAppendGrid = new AppendGrid({
                 element: "tblAppendGrid",
                 columns: [
-                    { name: "foo", display: "Foo", value: "<default foo>" },
-                    { name: "bar", display: "Bar" }
+                    { name: "s_name", display: "Student Name", value: "Enter a name..." },
+                    { name: "s_course", display: "Course" },
+                    { name: "s_grade", display: "Grade" }
                 ],
                 afterRowAppended: function (caller, parentRowIndex, addedRowIndex) {
                     // Make sure AppendGrid is initialized
                     if (myAppendGrid) {
                         // Copy data of `Foo` from parent row to new added rows
-                        var parentValue = myAppendGrid.getCtrlValue("foo", parentRowIndex);
+                        var parentValue = myAppendGrid.getCtrlValue("s_name", parentRowIndex);
                         for (var z = 0; z < addedRowIndex.length; z++) {
-                            myAppendGrid.setCtrlValue("foo", addedRowIndex[z], parentValue);
+                            myAppendGrid.setCtrlValue("s_name", addedRowIndex[z], parentValue);
                         }
                     }
                 }
