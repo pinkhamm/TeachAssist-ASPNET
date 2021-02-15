@@ -7,6 +7,9 @@
     <script src="~/js/JQuery/jquery-ui.js"></script>
 
     <script>
+
+        //Drag and drop elements from the sidebar code
+
         $(function () {
 
             $(".sidebar_widget").draggable({
@@ -29,17 +32,12 @@
 
                     if (ui.draggable.hasClass("sidebar_widget")) {
 
-
-
                         var $item = $(ui.draggable).clone().appendTo("#widget-editor-area").css({
                             position: 'absolute',
                         });
 
-
-
-
-
                         $item.removeClass("sidebar_widget");
+
                         //if ($item.hasClass("#add_output_btn")) {
                         //    console.log("has class");
                         //}
@@ -57,11 +55,34 @@
                             }
                         });
                     }
-
-
                 }
             })
 
+            //End of drag and drop element code
+
+            //Create a new Table Code
+
+            $(".default_table").draggable({
+                appendTo: "#widget-editor-area",
+                cursor: "move",
+                start: function () {
+                    console.log("dragging")
+                },
+                stop: function () {
+                    console.log('stopped')
+                },
+            });
+
+            $(function createTable() {
+                //$("#action-menu new_table_btn").button();
+                $("#new_table_btn").click(function (event) {
+                    console.log('Clicked');
+
+
+
+
+                });
+            });
 
             //$iteration = 0;
         })</script>
@@ -73,9 +94,40 @@
     <button id="save_widget_btn" onclick="window.location = '@Url.Action("SaveWidget", "WidgetEditor")'">Save Widget</button>
     <!-- Confirm with user first before deleting -->
     <button id="delete_widget_btn" onclick="window.location = '@Url.Action("DeleteWidget", "WidgetEditor")'">Delete Widget</button>
+
+    <div id="create_new_table_form">
+        <fieldset>
+            <legend>Table Creator</legend>
+            <div class="control_group">
+                <label for="horizontal-spinner" class="ui-controlgroup-label">Name of Table: </label>
+                <input id="horizontal-spinner" class="ui-spinner-input">
+                <button id="new_table_btn">Create Table</button>
+            </div>
+        </fieldset>
+    </div>
 </div>
+
+
 <div id="widget-editor">
     <div id="widget-editor-area">
+        <!--This is the default table look when the create new table button is clicked -->
+
+
+        <div id="default_table">
+            <table>
+                <caption>Name of Table</caption>
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Grade</th>
+                    <th>Value</th>
+                </tr>
+            </table>
+        </div>
+
+
+
+
     </div>
     <div id="widget-editor-side-bar">
         <img class="sidebar_widget" id="add_output_btn" src="~/Images/addoutput.png" alt="addOutput_btn">
