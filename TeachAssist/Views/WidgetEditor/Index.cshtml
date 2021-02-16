@@ -8,11 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery.appendgrid@2/dist/AppendGrid.js"></script>
 
     <script>
-
         //Drag and drop elements from the sidebar code
-
         $(function () {
-
+            // Make Widget helpers draggable
             $(".sidebar_widget").draggable({
                 helper: "clone",
                 revert: "invalid",
@@ -25,14 +23,11 @@
                     console.log('stopped')
                 },
             });
-
+            // Make the Widget editor area droppable
             $("#widget-editor-area").droppable({
                 accept: ".sidebar_widget",
-
                 drop: function (event, ui) {
-
                     if (ui.draggable.hasClass("sidebar_widget")) {
-
                         var $item = $(ui.draggable).clone().appendTo("#widget-editor-area").css({
                             position: 'absolute',
                         });
@@ -42,7 +37,6 @@
                         //if ($item.hasClass("#add_output_btn")) {
                         //    console.log("has class");
                         //}
-
                         makeDraggable($item);
                     }
 
@@ -59,41 +53,35 @@
                     }
                 }
             });
+        })
 
-            //End of drag and drop element code
+        //End of drag and drop element code
 
-            //Create a new Table Code
+        //Create a new Table Code
+        $iteration = 0;
+        function createTable() {
+            // Create element id based on current iteration
+            var $WidgetID = "widget-table-" + $iteration;
 
-            $(function createTable() {
-                //$("#action-menu new_table_btn").button();
-                $("#new_table_btn").click(function (event) {
-                    console.log('Clicked');
+            // Create the HTML table element with the Element ID we made above
+            var $table = $('<table class="WidgetTable" id="' + $WidgetID + '"></table > ');
 
+            // Add the HTML table to the widget editor
+            $table.appendTo('#widget-editor-area');
 
+            // Update the iteration count for the next table
+            $iteration += 1;
 
-
-
-
-                });
-            });
-
-
-            //$("#default_table").draggable({
-            //    appendTo: "#widget-editor-area",
-            //    position: 'absolute',
-            //    cursor: "move",
-            //    grid: [20, 20],
-            //}).resizable();
-
-
-            $("#tblAppendGrid").draggable({
+            // Make the table draggable and contain it to the widget editor
+            $($table).draggable({
                 containment: "#widget-editor-area",
                 cursor: "move",
                 grid: [20, 20]
             })
 
+            // Apend the grid information to the table element
             var myAppendGrid = new AppendGrid({
-                element: "tblAppendGrid",
+                element: $WidgetID,
                 columns: [
                     { name: "s_name", display: "Student Name", value: "Enter a name..." },
                     { name: "s_course", display: "Course" },
@@ -110,9 +98,8 @@
                     }
                 }
             });
-
-            //$iteration = 0;
-        })</script>
+        }
+</script>
 
 }
 
@@ -129,7 +116,7 @@
             <div class="control_group">
                 <label for="horizontal-spinner" class="ui-controlgroup-label">Name of Table: </label>
                 <input id="horizontal-spinner" class="ui-spinner-input">
-                <button id="new_table_btn">Create Table</button>
+                <button id="new_table_btn" onclick="createTable()">Create Table</button>
             </div>
         </fieldset>
     </div>
@@ -149,12 +136,6 @@
                     <th>Value</th>
                 </tr>
             </table>*@
-
-
-            <table id="tblAppendGrid"></table>
-
-
-
 
     </div>
     <div id="widget-editor-side-bar">
