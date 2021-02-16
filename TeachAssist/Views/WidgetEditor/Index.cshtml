@@ -11,6 +11,9 @@
 
         //Drag and drop elements from the sidebar code
 
+        //Table creation referenced from AppendGrid http://appendgrid.apphb.com/
+        //jQuery: https://jquery.com/
+
         $(function () {
 
             $(".sidebar_widget").draggable({
@@ -37,11 +40,9 @@
                             position: 'absolute',
                         });
 
-                        $item.removeClass("sidebar_widget");
 
-                        //if ($item.hasClass("#add_output_btn")) {
-                        //    console.log("has class");
-                        //}
+
+                        $item.removeClass("sidebar_widget");
 
                         makeDraggable($item);
                     }
@@ -59,31 +60,19 @@
                     }
                 }
             });
-
             //End of drag and drop element code
 
-            //Create a new Table Code
 
+
+            //Create a new Table Code
             $(function createTable() {
                 //$("#action-menu new_table_btn").button();
                 $("#new_table_btn").click(function (event) {
                     console.log('Clicked');
 
 
-
-
-
-
                 });
             });
-
-
-            //$("#default_table").draggable({
-            //    appendTo: "#widget-editor-area",
-            //    position: 'absolute',
-            //    cursor: "move",
-            //    grid: [20, 20],
-            //}).resizable();
 
 
             $("#tblAppendGrid").draggable({
@@ -111,7 +100,6 @@
                 }
             });
 
-            //$iteration = 0;
         })</script>
 
 }
@@ -139,17 +127,6 @@
 <div id="widget-editor">
     <div id="widget-editor-area">
         <!--This is the default table look when the create new table button is clicked -->
-
-            @*<table id="default_table">
-                <caption>Name of Table</caption>
-                <tr>
-                    <th>Student</th>
-                    <th>Course</th>
-                    <th>Grade</th>
-                    <th>Value</th>
-                </tr>
-            </table>*@
-
 
             <table id="tblAppendGrid"></table>
 
