@@ -9,6 +9,7 @@
 
     <script>
         //Drag and drop elements from the sidebar code
+
         $(function () {
             // Make Widget helpers draggable
             $(".sidebar_widget").draggable({
@@ -32,11 +33,11 @@
                             position: 'absolute',
                         });
 
-                        $item.removeClass("sidebar_widget");
 
                         //if ($item.hasClass("#add_output_btn")) {
                         //    console.log("has class");
                         //}
+
                         makeDraggable($item);
                     }
 
@@ -53,27 +54,36 @@
                     }
                 }
             });
-        })
 
-        //End of drag and drop element code
+            //End of drag and drop element code
 
-        //Create a new Table Code
-        $iteration = 0;
-        function createTable() {
-            // Create element id based on current iteration
-            var $WidgetID = "widget-table-" + $iteration;
+            //Create a new Table Code
 
-            // Create the HTML table element with the Element ID we made above
-            var $table = $('<table class="WidgetTable" id="' + $WidgetID + '"></table > ');
+            $(function createTable() {
+                //$("#action-menu new_table_btn").button();
+                $("#new_table_btn").click(function (event) {
+                    console.log('Clicked');
 
             // Add the HTML table to the widget editor
             $table.appendTo('#widget-editor-area');
 
-            // Update the iteration count for the next table
-            $iteration += 1;
 
-            // Make the table draggable and contain it to the widget editor
-            $($table).draggable({
+
+
+
+                });
+            });
+
+
+            //$("#default_table").draggable({
+            //    appendTo: "#widget-editor-area",
+            //    position: 'absolute',
+            //    cursor: "move",
+            //    grid: [20, 20],
+            //}).resizable();
+
+
+            $("#tblAppendGrid").draggable({
                 containment: "#widget-editor-area",
                 cursor: "move",
                 grid: [20, 20]
@@ -98,8 +108,9 @@
                     }
                 }
             });
-        }
-</script>
+
+            //$iteration = 0;
+        })</script>
 
 }
 
@@ -136,6 +147,12 @@
                     <th>Value</th>
                 </tr>
             </table>*@
+
+
+            <table id="tblAppendGrid"></table>
+
+
+
 
     </div>
     <div id="widget-editor-side-bar">
