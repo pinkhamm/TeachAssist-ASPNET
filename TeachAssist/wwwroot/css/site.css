@@ -22,7 +22,8 @@ a {
     height: 65%;
     margin-right: 20px;
     border: none;
-    color: #404040;
+    color: black;
+    font-weight: bold;
     background-color: #929eba;
 }
 
@@ -30,7 +31,8 @@ a {
     height: 65%;
     margin-right: 20px;
     border: none;
-    color: #404040;
+    color: black;
+    font-weight: bold;
     background-color: #929eba;
 }
 
@@ -115,7 +117,8 @@ body {
         height: 65%;
         margin-right: 20px;
         border: none;
-        color: #404040;
+        color: black;
+        font-weight: bold;
         background-color: #929eba;
         
     }
