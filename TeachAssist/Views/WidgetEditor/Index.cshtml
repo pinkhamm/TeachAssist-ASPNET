@@ -3,34 +3,68 @@
 }
 
 @section Scripts {
+
     <script src="~/js/JQuery/jquery-1.12.4.js"></script>
     <script src="~/js/JQuery/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.0.7/jsPlumb.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.appendgrid@2/dist/AppendGrid.js"></script>
 
     <script>
         //Drag and drop elements from the sidebar code
-        $(function () {
+
+        //Global variables for ID iteration on html elements
+
+        $table_iteration = 0;
+        $widget_iteration = 0;
+
+
+        jsPlumb.setContainer($("body"));
+
+        jsPlumb.ready(function () {
             // Make Widget helpers draggable
             $(".sidebar_widget").draggable({
                 helper: "clone",
                 revert: "invalid",
                 appendTo: "#widget-editor-area",
                 cursor: "move",
+                drag: function () {
+                    jsPlumb.repaintEverything();
+                    console.log("jsplumb repainting");
+                    //jsPlumb.repaint($(this)); 
+
+                },
                 start: function () {
-                    console.log("dragging")
+                    console.log("dragging");
                 },
                 stop: function () {
-                    console.log('stopped')
+                    console.log('stopped');
                 },
             });
+
+
+
+
+
+
             // Make the Widget editor area droppable
             $("#widget-editor-area").droppable({
                 accept: ".sidebar_widget",
                 drop: function (event, ui) {
+
+
+                    var $WidgetID = "widget-" + $widget_iteration;
+
                     if (ui.draggable.hasClass("sidebar_widget")) {
-                        var $item = $(ui.draggable).clone().appendTo("#widget-editor-area").css({
+                        var $item = $(ui.draggable).clone().attr('id', $WidgetID).appendTo("#widget-editor-area").css({
                             position: 'absolute',
                         });
+
+                        
+
+                        $widget_iteration += 1;
+
+                        drawEndPoints($WidgetID, "Left");
+
 
                         $item.removeClass("sidebar_widget");
                         makeDraggable($item);
@@ -41,6 +75,12 @@
                             cursor: "move",
                             grid: [20, 20],
                             containment: "#widget-editor-area",
+                            drag: function () {
+                                jsPlumb.repaintEverything();
+                                console.log("jsplumb repainting");
+                                //jsPlumb.repaint($(this)); 
+
+                            },
                             start: function () { },
                             stop: function () {
                                 console.log('stopped')
@@ -54,30 +94,39 @@
         //End of drag and drop element code
 
         //Create a new Table Code
-        $iteration = 0;
         function createTable() {
             // Create element id based on current iteration
-            var $WidgetID = "widget-table-" + $iteration;
+            var $TableID = "widget-table-" + $table_iteration;
 
             // Create the HTML table element with the Element ID we made above
-            var $table = $('<table class="WidgetTable" id="' + $WidgetID + '"></table > ');
+            var $table = $('<table class="WidgetTable" id="' + $TableID + '"></table > ');
 
             // Add the HTML table to the widget editor
             $table.appendTo('#widget-editor-area');
 
             // Update the iteration count for the next table
-            $iteration += 1;
+            $table_iteration += 1;
+
+            drawEndPoints($TableID, "Right");
+
 
             // Make the table draggable and contain it to the widget editor
             $($table).draggable({
                 containment: "#widget-editor-area",
                 cursor: "move",
-                grid: [20, 20]
+                grid: [20, 20],
+                drag: function () {
+                    jsPlumb.repaintEverything();
+                    console.log("jsplumb repainting");
+                    //jsPlumb.repaint($(this)); 
+
+                }
             })
+            
 
             // Apend the grid information to the table element
             var myAppendGrid = new AppendGrid({
-                element: $WidgetID,
+                element: $TableID,
                 columns: [
                     { name: "s_name", display: "Student Name", value: "Enter a name..." },
                     { name: "s_course", display: "Course" },
@@ -95,6 +144,40 @@
                 }
             });
         }
+
+
+        function drawEndPoints(id, endpointposition) {
+
+            var endpointOptions = {
+                isSource: true,
+                isTarget: true,
+                endpoint: ["Rectangle", {
+                    radius: 20
+                }],
+                style: {
+                    fillStyle: 'grey'
+
+                },
+                maxConnections: -1,
+                connector: "Bezier",
+                connectorStyle: {
+                    lineWidth: 5,
+                    strokeStyle: 'blue'
+                },
+                scope: "blackline",
+                dropOptions: {
+                    drop: function (e, ui) {
+                        alert('drop!');
+                    }
+                }
+            };
+
+            jsPlumb.addEndpoint($("#" + id), {
+                anchor: endpointposition
+            }, endpointOptions);
+        }
+
+
     </script>
 
 }
