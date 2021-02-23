@@ -189,10 +189,6 @@ body {
     margin-right: auto;
 }
 
-.sidebar_widget:hover {
-    cursor: grab;
-}
-
 table, td, th {
     padding: 8px;
     border: 1px solid black;
@@ -221,3 +217,46 @@ caption{
 /*#default_table:hover {
     cursor: grab;
 }*/
+
+
+/*Hover border colors*/
+
+.sidebar_widget:hover {
+    cursor: grab;
+    border: 4px groove red;
+    border-radius: 10px;
+}
+
+.ui-draggable:hover {
+    cursor: grab;
+    border: 4px groove red;
+    border-radius: 10px;
+}
+
+.WidgetTable:hover {
+    cursor: grab;
+    border: 4px groove red;
+    border-radius: 10px;
+}
+
+.jsplumb-endpoint:hover {
+    cursor: grab;
+    border: 4px groove red;
+    border-radius: 10px;
+}
+
+#action-menu button:hover {
+    border: 1px groove red;
+    border-radius: 10px;
+}
+
+
+#user-settings-btn:hover {
+    border: 1px groove red;
+    border-radius: 10px;
+}
+
+#user-account-btn:hover {
+    border: 1px groove red;
+    border-radius: 10px;
+}
