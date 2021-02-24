@@ -169,27 +169,6 @@ body {
     width: 80%;
 }
 
-#widget-editor-side-bar {
-    display: inline;
-    float: right;
-    background-color: white;
-    border: none;
-    border-radius: 0px;
-    min-height: 350px;
-    height: 125%;
-    width: 15%;
-    margin-top: 0.5%;
-    margin-right: 2%;
-}
-
-#widget-editor-side-bar img {
-    display: block;
-    margin-top: 10%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10%;
-}
-
 table, td, th {
     padding: 8px;
     border: 1px solid black;
@@ -197,7 +176,7 @@ table, td, th {
 
 table {
     border-collapse: collapse;
-    margin: 0.5;
+    margin: 0.5px;
     padding: 0.5em;
 }
 
@@ -220,8 +199,46 @@ caption{
 }*/
 
 
-/*Hover border colors*/
+/* SIDEBAR CSS - MAYBE MOVE TO SEPARATE STYLESHEET
+-------------------------------------------------- */
 
+#widget-editor-side-bar {
+    display: inline;
+    float: right;
+    background-color: white;
+    border: none;
+    border-radius: 0px;
+    min-height: 350px;
+    height: 125%;
+    width: 15%;
+    margin-top: 0.5%;
+    margin-right: 2%;
+
+}
+
+#widget-editor-side-bar img {
+    display: block;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10%;
+
+}
+
+#flashing_text {
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    background-color: #e5eecc;
+    border: solid 1px #c3c3c3;
+    text-align: center;
+    font-size: medium;
+    display: none;
+}
+
+
+
+/*Hover border colors*/
 .sidebar_widget:hover {
     cursor: grab;
     border: 4px groove red;

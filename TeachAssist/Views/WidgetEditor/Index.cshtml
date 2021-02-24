@@ -63,7 +63,7 @@
 
                         $widget_iteration += 1;
 
-                        drawEndPoints($WidgetID, "Left");
+                        drawEndPoints($WidgetID, "Left", false);
 
 
                         $item.removeClass("sidebar_widget");
@@ -92,11 +92,24 @@
                             $(this).toggleClass('active'); // if hovered then it has class active
                             console.log("ID: " + $(".active").attr('id'));
                         });
+
                         $(document).keyup(function (e) {
                             if (e.which == 46) {
                                 jsPlumb.remove($(".active").attr('id'));
                             }
                         });
+
+                        $(document).keyup(function (e) {
+                            if (e.which == 35) {
+                                console.log("End key pressed. This will output connections in the future...");
+
+
+
+
+                            }
+                        });
+
+
                     }
                 }
             });
@@ -118,7 +131,7 @@
             // Update the iteration count for the next table
             $table_iteration += 1;
 
-            drawEndPoints($TableID, "Right");
+            drawEndPoints($TableID, "Right", true);
 
 
             // Make the table draggable and contain it to the widget editor
@@ -168,14 +181,14 @@
         }
 
 
-        function drawEndPoints(id, endpointposition) {
+        function drawEndPoints(id, endpointposition, isSource) {
 
-            var endpointOptions = {
+            var endpointSource = {
                 isSource: true,
-                isTarget: true,
+                isTarget: false,
                 endpoint: ["Rectangle", {
-                    width: 25,
-                    height: 25
+                    width: 40,
+                    height: 40
                 }],
                 style: {
                     fillStyle: 'grey'
@@ -190,19 +203,59 @@
                 scope: "blackline",
                 dropOptions: {
                     drop: function (e, ui) {
-                        alert('drop!');
+                        $("#flashing_text").text('Unable to connect two tables together...');
+                        $("#flashing_text").slideDown(function () {
+                            setTimeout(function () {
+                                $("#flashing_text").slideUp();
+                            }, 2500);
+                        });
+
                     }
                 }
             };
 
-            jsPlumb.addEndpoint($("#" + id), {
-                anchor: endpointposition
-            }, endpointOptions);
+            var endpointDestination = {
+                isSource: false,
+                isTarget: true,
+                endpoint: ["Dot", {
+                    radius: 15
+                }],
+                style: {
+                    fillStyle: 'grey'
+
+                },
+                maxConnections: 1,
+                connector: "Bezier",
+                connectorStyle: {
+                    lineWidth: 5,
+                    strokeStyle: 'blue'
+                },
+                scope: "blackline",
+                dropOptions: {
+                    drop: function (e, ui) {
+                        $("#flashing_text").text('One table connection maximum...');
+                        $("#flashing_text").slideDown(function () {
+                            setTimeout(function () {
+                                $("#flashing_text").slideUp();
+                            }, 2500);
+                        });
+                    }
+                }
+            };
+
+            if (isSource == true) {
+                jsPlumb.addEndpoint($("#" + id), {
+                    anchor: endpointposition
+                }, endpointSource);
+            } else if (isSource == false) {
+                jsPlumb.addEndpoint($("#" + id), {
+                    anchor: endpointposition
+                }, endpointDestination);
+            }
         }
 
 
     </script>
-
 }
 
 <div id="action-menu">
@@ -225,7 +278,7 @@
     </div>
 </div>
 
-Press the "delete" key to delete item
+<p>Press the "delete" key to delete item</p><p class="flashing_text_effect" id="flashing_text">placeholder</p>
 
 
 <div id="widget-editor">
@@ -247,22 +300,22 @@ Press the "delete" key to delete item
 
         <div class="sidebar_widget" id="add_output_btn">
             <img src="~/Images/addoutput.png" alt="addOutput_btn">
-            <div id="sidebar_widget-value_box">Value box placeholder</div>
+            <div class="sidebar_widget-value_box" id="add_output_value">add_output_value</div>
         </div>
 
         <div class="sidebar_widget" id="avg_output_btn">
             <img src="~/Images/avgoutput.png" alt="avgOutput_btn">
-            <div id="sidebar_widget-value_box">Value box placeholder</div>
+            <div class="sidebar_widget-value_box" id="avg_output_value">avg_output_value</div>
         </div>
 
         <div class="sidebar_widget" id="bar_graph_btn">
             <img src="~/Images/bargraph.png" alt="barGraph_btn">
-            <div id="sidebar_widget-value_box">Value box placeholder</div>
+            <div class="sidebar_widget-value_box" id="bargraph_value">bargraph_value</div>
         </div>
 
         <div class="sidebar_widget" id="pie_chart_btn">
             <img src="~/Images/piechart.png" alt="pieChart_btn">
-            <div id="sidebar_widget-value_box">Value box placeholder</div>
+            <div class="sidebar_widget-value_box" id="piechart_value">piechart_value</div>
         </div>
 
     </div>
