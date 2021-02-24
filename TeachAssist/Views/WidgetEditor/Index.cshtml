@@ -90,12 +90,11 @@
 
                         $item.hover(function () {
                             $(this).toggleClass('active'); // if hovered then it has class active
-                            console.log("ID: " + this.id);
+                            console.log("ID: " + $(".active").attr('id'));
                         });
                         $(document).keyup(function (e) {
                             if (e.which == 46) {
-                                $('.active').remove(); // if d is pressed then remove active image
-                                jsPlumb.repaintEverything();
+                                jsPlumb.remove($(".active").attr('id'));
                             }
                         });
                     }
@@ -138,12 +137,11 @@
 
             $('.WidgetTable').hover(function () {
                 $(this).toggleClass('active'); // if hovered then it has class active
-                console.log("ID: " + this.id);
+                console.log("ID: " + $(".active").attr('id'));
             });
             $(document).keyup(function (e) {
                 if (e.which == 46) {
-                    $('.active').remove(); // if d is pressed then remove active image
-                    jsPlumb.repaintEverything();
+                    jsPlumb.remove($(".active").attr('id'));
                 }
             });
 
@@ -244,11 +242,29 @@ Press the "delete" key to delete item
             </table>*@
 
     </div>
+
     <div id="widget-editor-side-bar">
-        <img class="sidebar_widget" id="add_output_btn" src="~/Images/addoutput.png" alt="addOutput_btn">
-        <img class="sidebar_widget" id="avg_output_btn" src="~/Images/avgoutput.png" alt="avgOutput_btn">
-        <img class="sidebar_widget" id="bar_graph_btn" src="~/Images/bargraph.png" alt="barGraph_btn">
-        <img class="sidebar_widget" id="pie_chart_btn" src="~/Images/piechart.png" alt="pieChart_btn">
+
+        <div class="sidebar_widget" id="add_output_btn">
+            <img src="~/Images/addoutput.png" alt="addOutput_btn">
+            <div id="sidebar_widget-value_box">Value box placeholder</div>
+        </div>
+
+        <div class="sidebar_widget" id="avg_output_btn">
+            <img src="~/Images/avgoutput.png" alt="avgOutput_btn">
+            <div id="sidebar_widget-value_box">Value box placeholder</div>
+        </div>
+
+        <div class="sidebar_widget" id="bar_graph_btn">
+            <img src="~/Images/bargraph.png" alt="barGraph_btn">
+            <div id="sidebar_widget-value_box">Value box placeholder</div>
+        </div>
+
+        <div class="sidebar_widget" id="pie_chart_btn">
+            <img src="~/Images/piechart.png" alt="pieChart_btn">
+            <div id="sidebar_widget-value_box">Value box placeholder</div>
+        </div>
+
     </div>
 
 </div>
