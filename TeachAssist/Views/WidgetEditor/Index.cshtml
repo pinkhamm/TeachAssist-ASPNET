@@ -101,11 +101,15 @@
 
                         $(document).keyup(function (e) {
                             if (e.which == 35) {
-                                console.log("End key pressed. This will output connections in the future...");
-
-
-
-
+                                console.log("All output connections: ");
+                                var con = jsPlumb.getAllConnections();
+                                var list = [];
+                                for (var i = 0; i < con.length; i++) {
+                                    list[i] = new Array(2);
+                                    var source = (list[i][0] = con[i].sourceId)
+                                    var target = (list[i][1] = con[i].targetId)
+                                    console.log(source + " -> " + target);
+                                }
                             }
                         });
 
@@ -278,7 +282,10 @@
     </div>
 </div>
 
-<p>Press the "delete" key to delete item</p><p class="flashing_text_effect" id="flashing_text">placeholder</p>
+<p>Press the "delete" key to delete item</p>
+<p>Press the "end" key to show all connections in console</p>
+
+<p class="flashing_text_effect" id="flashing_text">placeholder</p>
 
 
 <div id="widget-editor">
