@@ -99,20 +99,6 @@
                             }
                         });
 
-                        $(document).keyup(function (e) {
-                            if (e.which == 35) {
-                                console.log("All output connections: ");
-                                var con = jsPlumb.getAllConnections();
-                                var list = [];
-                                for (var i = 0; i < con.length; i++) {
-                                    list[i] = new Array(2);
-                                    var source = (list[i][0] = con[i].sourceId)
-                                    var target = (list[i][1] = con[i].targetId)
-                                    console.log(source + " -> " + target);
-                                }
-                            }
-                        });
-
 
                     }
                 }
@@ -155,7 +141,9 @@
             $('.WidgetTable').hover(function () {
                 $(this).toggleClass('active'); // if hovered then it has class active
                 console.log("ID: " + $(".active").attr('id'));
+
             });
+
             $(document).keyup(function (e) {
                 if (e.which == 46) {
                     jsPlumb.remove($(".active").attr('id'));
@@ -182,7 +170,31 @@
                     }
                 }
             });
+
+
         }
+
+        $(document).keyup(function (e) {
+            if (e.which == 35) {
+                console.log("All output connections: ");
+                var con = jsPlumb.getAllConnections();
+                var list = [];
+                for (var i = 0; i < con.length; i++) {
+                    list[i] = new Array(2);
+                    var source = (list[i][0] = con[i].sourceId)
+                    var target = (list[i][1] = con[i].targetId)
+                    console.log(source + " -> " + target);
+
+
+                    var calculation = ("#" + source)
+
+
+                    //console.log($("#" + source).getCtrlValue("s_grade",1) + " is connected.")
+                    console.log('test');
+                    console.log($("#" + source).getCtrlValue("s_grade", 0));
+                }
+            }
+        });
 
 
         function drawEndPoints(id, endpointposition, isSource) {
