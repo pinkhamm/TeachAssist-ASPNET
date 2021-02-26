@@ -14,14 +14,14 @@ a {
 
 .btn-primary {
   color: #fff;
-  background-color: #1b6ec2;
+  background-color: #929eba;
   border: #1861ac;
 }
 
 #user-account-btn{
     height: 65%;
     margin-right: 20px;
-    border: none;
+    border: 3px solid #929eba;
     color: black;
     font-weight: bold;
     background-color: #929eba;
@@ -30,7 +30,7 @@ a {
 #user-settings-btn{
     height: 65%;
     margin-right: 20px;
-    border: none;
+    border: 3px solid #929eba;
     color: black;
     font-weight: bold;
     background-color: #929eba;
@@ -44,6 +44,16 @@ a {
 
 #user-settings-icon {
     height: 14px;
+}
+
+#user-settings-btn:hover {
+    border: 3px groove #040469;
+    border-radius: 10px;
+}
+
+#user-account-btn:hover {
+    border: 3px groove #040469;
+    border-radius: 10px;
 }
 
 /* Sticky footer styles
@@ -83,7 +93,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-color: rgba(200,217,217,1);
+    background-color: #fffffa;
 }
 .footer {
   position: absolute;
@@ -99,7 +109,6 @@ body {
 
 #action-menu {
     position: relative;
-    background-color: rgba(200,217,217,1);
     border: none;
     border-radius: 0px;
     margin-top: 5px;
@@ -116,13 +125,17 @@ body {
     #action-menu button {
         height: 65%;
         margin-right: 20px;
-        border: none;
+        border: 3px solid #929eba;
         color: black;
         font-weight: bold;
         background-color: #929eba;
         
     }
 
+    #action-menu button:hover {
+    border: 3px groove #040469;
+    border-radius: 10px;
+}
 /* DASHBOARD SPECIFIC - MAYBE MOVE TO SEPARATE STYLESHEET
 -------------------------------------------------- */
 
@@ -241,40 +254,28 @@ caption{
 /*Hover border colors*/
 .sidebar_widget:hover {
     cursor: grab;
-    border: 4px groove red;
+    border: 4px groove #040469;
     border-radius: 10px;
 }
 
 .ui-draggable:hover {
     cursor: grab;
-    border: 4px groove red;
+    border: 4px groove #040469;
     border-radius: 10px;
 }
 
 .WidgetTable:hover {
     cursor: grab;
-    border: 4px groove red;
+    border: 4px groove #040469;
     border-radius: 10px;
 }
 
 .jsplumb-endpoint:hover {
     cursor: grab;
-    border: 4px groove red;
-    border-radius: 10px;
-}
-
-#action-menu button:hover {
-    border: 1px groove red;
+    border: 4px groove #040469;
     border-radius: 10px;
 }
 
 
-#user-settings-btn:hover {
-    border: 1px groove red;
-    border-radius: 10px;
-}
 
-#user-account-btn:hover {
-    border: 1px groove red;
-    border-radius: 10px;
-}
+
