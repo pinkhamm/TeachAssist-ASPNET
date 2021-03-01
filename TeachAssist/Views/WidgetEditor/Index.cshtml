@@ -16,6 +16,7 @@
 
         $table_iteration = 0;
         $widget_iteration = 0;
+        var myAppendGrid = [];
 
 
         jsPlumb.setContainer($("body"));
@@ -118,9 +119,6 @@
             // Add the HTML table to the widget editor
             $table.appendTo('#widget-editor-area');
 
-            // Update the iteration count for the next table
-            $table_iteration += 1;
-
             drawEndPoints($TableID, "Right", true);
 
 
@@ -152,7 +150,7 @@
 
 
             // Apend the grid information to the table element
-            var myAppendGrid = new AppendGrid({
+            myAppendGrid[$table_iteration] = new AppendGrid({
                 element: $TableID,
                 columns: [
                     { name: "s_name", display: "Student Name", value: "Enter a name..." },
@@ -161,40 +159,44 @@
                 ],
                 afterRowAppended: function (caller, parentRowIndex, addedRowIndex) {
                     // Make sure AppendGrid is initialized
-                    if (myAppendGrid) {
+                    if (myAppendGrid[$table_iteration]) {
                         // Copy data of `Foo` from parent row to new added rows
-                        var parentValue = myAppendGrid.getCtrlValue("s_name", parentRowIndex);
+                        var parentValue = myAppendGrid[$table_iteration].getCtrlValue("s_name", parentRowIndex);
                         for (var z = 0; z < addedRowIndex.length; z++) {
-                            myAppendGrid.setCtrlValue("s_name", addedRowIndex[z], parentValue);
+                            myAppendGrid[$table_iteration].setCtrlValue("s_name", addedRowIndex[z], parentValue);
                         }
                     }
                 }
+
+
+
             });
 
 
-        }
 
-        $(document).keyup(function (e) {
-            if (e.which == 35) {
-                console.log("All output connections: ");
-                var con = jsPlumb.getAllConnections();
-                var list = [];
-                for (var i = 0; i < con.length; i++) {
-                    list[i] = new Array(2);
-                    var source = (list[i][0] = con[i].sourceId)
-                    var target = (list[i][1] = con[i].targetId)
-                    console.log(source + " -> " + target);
+            $(document).keyup(function (e) {
+                if (e.which == 35) {
+                    console.log("All output connections: ");
+                    var con = jsPlumb.getAllConnections();
+                    var list = [];
+                    for (var i = 0; i < con.length; i++) {
+                        list[i] = new Array(2);
+                        var source = (list[i][0] = con[i].sourceId)
+                        var target = (list[i][1] = con[i].targetId)
+                        console.log(source + " -> " + target);
+
+                        //console.log($("#" + source).getCtrlValue("s_grade",1) + " is connected.")
+                        console.log(myAppendGrid[i].getCtrlValue("s_grade",1));
+                    }
 
 
-                    var calculation = ("#" + source)
-
-
-                    //console.log($("#" + source).getCtrlValue("s_grade",1) + " is connected.")
-                    console.log('test');
-                    console.log($("#" + source).getCtrlValue("s_grade", 0));
                 }
-            }
-        });
+            });
+
+            // Update the iteration count for the next table
+            $table_iteration += 1;
+
+        }
 
 
         function drawEndPoints(id, endpointposition, isSource) {
