@@ -30,8 +30,7 @@
                 cursor: "move",
                 drag: function () {
                     jsPlumb.repaintEverything();
-                    console.log("jsplumb repainting");
-                    //jsPlumb.repaint($(this));
+                    //console.log("jsplumb repainting");
 
                 },
                 start: function () {
@@ -62,7 +61,7 @@
 
 
 
-                        $widget_iteration += 1;
+                        $widget_iteration ++;
 
                         drawEndPoints($WidgetID, "Left", false);
 
@@ -78,7 +77,7 @@
                             containment: "#widget-editor-area",
                             drag: function () {
                                 jsPlumb.repaintEverything();
-                                console.log("jsplumb repainting");
+                                //console.log("jsplumb repainting");
 
                             },
                             start: function () { },
@@ -94,11 +93,20 @@
                             console.log("ID: " + $(".active").attr('id'));
                         });
 
-                        $(document).keyup(function (e) {
-                            if (e.which == 46) {
-                                jsPlumb.remove($(".active").attr('id'));
-                            }
-                        });
+
+                    }
+                }
+            });
+        })
+
+        //End of drag and drop element code
+
+
+        $(document).keyup(function (e) {
+            if (e.which == 46) {
+                jsPlumb.remove($(".active").attr('id'));
+            }
+        });
 
 
                     }
@@ -114,8 +122,6 @@
             }
             return arr;
         }
-
-        //End of drag and drop element code
 
         //Create a new Table Code
         function createTable() {
@@ -196,13 +202,13 @@
 
                         console.log(myAppendGrid[i].getCtrlValue("s_grade",0));
                     }
-
+                    myAppendGrid.forEach(item => console.log(item));
 
                 }
             });
 
             // Update the iteration count for the next table
-            $table_iteration += 1;
+            $table_iteration ++;
 
         }
 
