@@ -30,7 +30,6 @@
                 cursor: "move",
                 drag: function () {
                     jsPlumb.repaintEverything();
-                    //console.log("jsplumb repainting");
 
                 },
                 start: function () {
@@ -59,7 +58,7 @@
                             position: 'absolute',
                         });
 
-
+                        $item.addClass("widget");
 
                         $widget_iteration++;
 
@@ -101,9 +100,26 @@
 
         //End of drag and drop element code
 
-
         $(document).keyup(function (e) {
             if (e.which == 46) {
+                if ($(".active").hasClass("WidgetTable")) {
+
+                    //var tempID = $(".active").attr('id');
+                    //var tablenumber = tempID.substring(tempID.indexOf('-') + 1);
+                    //console.log(tablenumber);
+
+                    console.log("Item deleted was a table");
+
+
+
+
+                } else if ($(".active").hasClass("widget")) {
+
+
+                    console.log("Item deleted was a widget");
+
+
+                }
                 jsPlumb.remove($(".active").attr('id'));
             }
         });
@@ -113,10 +129,12 @@
         //Create a new Table Code
         function createTable() {
             // Create element id based on current iteration
-            var $TableID = "widget-table-" + $table_iteration;
+            var $TableID = "widget_table-" + $table_iteration;
 
             // Create the HTML table element with the Element ID we made above
             var $table = $('<table class="WidgetTable" id="' + $TableID + '"></table > ');
+
+            //$table.addClass("isTable");
 
             // Add the HTML table to the widget editor
             $table.appendTo('#widget-editor-area');
@@ -161,8 +179,6 @@
                         }
                     }
                 }
-
-
 
             });
 
