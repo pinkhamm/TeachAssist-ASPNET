@@ -17,7 +17,7 @@
         $table_iteration = 0;
         $widget_iteration = 0;
         var myAppendGrid = [];
-
+        var myAppendGridID = [];
 
         jsPlumb.setContainer($("body"));
 
@@ -30,7 +30,6 @@
                 cursor: "move",
                 drag: function () {
                     jsPlumb.repaintEverything();
-
                 },
                 start: function () {
                     console.log("dragging");
@@ -40,17 +39,10 @@
                 },
             });
 
-
-
-
-
-
             // Make the Widget editor area droppable
             $("#widget-editor-area").droppable({
                 accept: ".sidebar_widget",
                 drop: function (event, ui) {
-
-
                     var $WidgetID = "widget-" + $widget_iteration;
 
                     if (ui.draggable.hasClass("sidebar_widget")) {
@@ -108,9 +100,17 @@
                     //var tablenumber = tempID.substring(tempID.indexOf('-') + 1);
                     //console.log(tablenumber);
 
+                    for (var x = 0; x < myAppendGrid.length; x++) {
+                        var SelectedTableID = $(".active").attr('id');
+                        if (myAppendGridID[x] == SelectedTableID) {
+                            console.log("Deleted Grid object: " + SelectedTableID);
+                            myAppendGrid.splice(x, 1);
+                            myAppendGridID.splice(x, 1);
+                            break;
+                        }
+                    }
+
                     console.log("Item deleted was a table");
-
-
 
 
                 } else if ($(".active").hasClass("widget")) {
@@ -133,6 +133,8 @@
 
             // Create the HTML table element with the Element ID we made above
             var $table = $('<table class="WidgetTable" id="' + $TableID + '"></table > ');
+
+            myAppendGridID.push($TableID);
 
             //$table.addClass("isTable");
 
