@@ -104,7 +104,16 @@
                     }
                 }
             });
-        })
+        });
+
+
+        function removeItemFromArray(arr, value) {
+            var index = arr.indexOf(value);
+            if (index > -1) {
+                arr.splice(index, 1);
+            }
+            return arr;
+        }
 
         //End of drag and drop element code
 
@@ -130,24 +139,24 @@
                 drag: function () {
                     jsPlumb.repaintEverything();
                     console.log("jsplumb repainting");
-                    //jsPlumb.repaint($(this));
-
                 }
             });
 
 
             $('.WidgetTable').hover(function () {
-                $(this).toggleClass('active'); // if hovered then it has class active
+                $(this).toggleClass('active');
                 console.log("ID: " + $(".active").attr('id'));
 
             });
 
             $(document).keyup(function (e) {
                 if (e.which == 46) {
+                    if ($(".active").attr('id').hasClass(".WidgetTable")) {
+                        console.log("Has class WidgetTable");
+                    }
                     jsPlumb.remove($(".active").attr('id'));
                 }
             });
-
 
             // Apend the grid information to the table element
             myAppendGrid[$table_iteration] = new AppendGrid({
@@ -185,8 +194,7 @@
                         var target = (list[i][1] = con[i].targetId)
                         console.log(source + " -> " + target);
 
-                        //console.log($("#" + source).getCtrlValue("s_grade",1) + " is connected.")
-                        console.log(myAppendGrid[i].getCtrlValue("s_grade",1));
+                        console.log(myAppendGrid[i].getCtrlValue("s_grade",0));
                     }
 
 
@@ -279,7 +287,6 @@
 <div id="action-menu">
     <button id="cancel_widget_btn" onclick="window.location = '@Url.Action("Index", "Dashboard")'">Cancel</button>
     <button id="save_widget_btn" onclick="window.location = '@Url.Action("SaveWidget", "WidgetEditor")'">Save Widget</button>
-    <!-- Confirm with user first before deleting -->
     <button id="delete_widget_btn" onclick="window.location = '@Url.Action("DeleteWidget", "WidgetEditor")'">Delete Widget</button>
 
 
@@ -303,19 +310,7 @@
 
 
 <div id="widget-editor">
-    <div id="widget-editor-area">
-        <!--This is the default table look when the create new table button is clicked -->
-        @*<table id="default_table">
-                <caption>Name of Table</caption>
-                <tr>
-                    <th>Student</th>
-                    <th>Course</th>
-                    <th>Grade</th>
-                    <th>Value</th>
-                </tr>
-            </table>*@
-
-    </div>
+    <div id="widget-editor-area"></div>
 
     <div id="widget-editor-side-bar">
 
