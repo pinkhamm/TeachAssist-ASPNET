@@ -104,7 +104,7 @@
                         var SelectedTableID = $(".active").attr('id');
                         if (myAppendGridID[x] == SelectedTableID) {
                             console.log("Deleted Grid object: " + SelectedTableID);
-                            myAppendGrid.splice(x, 1);
+                            myAppendGrid.splice(x, 1)
                             myAppendGridID.splice(x, 1);
                             break;
                         }
@@ -124,6 +124,21 @@
             }
         });
 
+
+        $(document).keyup(function (e) {
+            if (e.which == 35) {
+                console.log("All output connections: ");
+                var con = jsPlumb.getAllConnections();
+                for (var i = 0; i < con.length; i++) {
+                    var source = (con[i].sourceId)
+                    var target = (con[i].targetId)
+                    console.log(source + " -> " + target);
+                    console.log(myAppendGrid[i].getCtrlValue("s_grade", 0));
+                }
+                myAppendGrid.forEach(item => console.log(item));
+
+            }
+        });
 
 
         //Create a new Table Code
@@ -182,26 +197,6 @@
                     }
                 }
 
-            });
-
-
-
-            $(document).keyup(function (e) {
-                if (e.which == 35) {
-                    console.log("All output connections: ");
-                    var con = jsPlumb.getAllConnections();
-                    var list = [];
-                    for (var i = 0; i < con.length; i++) {
-                        list[i] = new Array(2);
-                        var source = (list[i][0] = con[i].sourceId)
-                        var target = (list[i][1] = con[i].targetId)
-                        console.log(source + " -> " + target);
-
-                        console.log(myAppendGrid[i].getCtrlValue("s_grade", 0));
-                    }
-                    myAppendGrid.forEach(item => console.log(item));
-
-                }
             });
 
             // Update the iteration count for the next table
