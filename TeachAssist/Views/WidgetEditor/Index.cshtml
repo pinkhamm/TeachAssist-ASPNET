@@ -102,7 +102,7 @@
 
                     // Remove Table from DOM
                     var Table = document.getElementById(RemovalID);
-                    Table.remove();
+                    jsPlumb.remove(Table);
 
                     // Log Table Deletion with Console
                     console.log("Item deleted was a table: " + RemovalID);
