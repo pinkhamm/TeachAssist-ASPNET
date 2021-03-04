@@ -11,20 +11,21 @@
     <script src="~/js/JQuery/Plugins/AppendGrid.js"></script>
 
     <script>
-        //Drag and drop elements from the sidebar code
+    //Drag and drop elements from the sidebar code
 
-        //Global variables for ID iteration on html elements
-        $table_iteration = 0;
-        $widget_iteration = 0;
-        var myAppendGrid = [];
-        var tables = [];
-        var widgetHelpers = [];
+    //Global variables for ID iteration on html elements
+    $table_iteration = 0;
+    $widget_iteration = 0;
+    var myAppendGrid = [];
+    var tables = [];
+    var widgetHelpers = [];
 
-        jsPlumb.setContainer($("body"));
+    jsPlumb.setContainer($("body"));
 
-        jsPlumb.ready(function () {
-            // Make Widget helpers draggable
-            $(".sidebar_widget").draggable({
+    jsPlumb.ready(function () {
+        // Make Widget helpers draggable
+        $(".sidebar_widget_helper").draggable(
+            {
                 helper: "clone",
                 revert: "invalid",
                 appendTo: "#widget-editor-area",
@@ -38,44 +39,29 @@
                 stop: function () {
                     console.log('stopped');
                 },
-            });
+            }
+        );
 
-            // Make the Widget editor area droppable
-            $("#widget-editor-area").droppable({
-                accept: ".sidebar_widget",
+        // Make the Widget editor area droppable
+        $("#widget-editor-area").droppable(
+            {
+                accept: ".sidebar_widget_helper",
                 drop: function (event, ui) {
-
-                    // Set Appropriate Widget ID
-                    var $WidgetID = ui.draggable.attr('id') + "-" + $widget_iteration;
-                    widgetHelpers.push($WidgetID);
-
                     // Make Widget Helper Clones
-                    if (ui.draggable.hasClass("sidebar_widget")) {
-                        var $item = $(ui.draggable).clone().attr('id', $WidgetID).appendTo("#widget-editor-area").css({
-                            position: 'absolute',
-                        });
-                        $item.addClass("widget");
+                    if (ui.draggable.hasClass("sidebar_widget_helper")) {
+                        // Set Appropriate Widget ID
+                        var $WidgetID = ui.draggable.attr('id') + "-" + $widget_iteration;
+                        widgetHelpers.push($WidgetID);
+                        var $item = $(ui.draggable).clone().attr('id', $WidgetID).appendTo("#widget-editor-area").css(
+                            {
+                                position: 'absolute',
+                            }
+                        );
+                        $item.addClass("widget_editor_widget_helper");
                         $widget_iteration++;
                         drawEndPoints($WidgetID, "Left", false);
-                        $item.removeClass("sidebar_widget");
+                        $item.removeClass("sidebar_widget_helper");
                         makeDraggable($item);
-                    }
-
-                    // Make Widget Draggable and Add JSPlumb
-                    function makeDraggable($item) {
-                        $item.draggable({
-                            cursor: "move",
-                            grid: [20, 20],
-                            containment: "#widget-editor-area",
-                            drag: function () {
-                                jsPlumb.repaintEverything();
-                                //console.log("jsplumb repainting");
-                            },
-                            start: function () { },
-                            stop: function () {
-                                console.log('stopped')
-                            }
-                        });
 
                         // When Item is hovered over, change class
                         $item.hover(function () {
@@ -84,14 +70,16 @@
                         });
                     }
                 }
-            });
-        })
+            }
+        )
+    });
 
-        //End of drag and drop element code
-
-        $(document).keyup(function (e) {
+    // When Key is Pressed
+    $(document).keyup(
+        function (e) {
+            // When DEL key is Pressed
             if (e.which == 46) {
-                if ($(".active").hasClass("WidgetTable")) {
+                if ($(".active").hasClass("widget_helper_table")) {
                     // Set Table ID to variable 'RemovalID'
                     var RemovalID = $(".active").attr('id');
 
@@ -110,7 +98,7 @@
                     console.log("Number of Tables: " + tables.length);
                     console.log("Number of Grids (SHOULD BE THE SAME): " + myAppendGrid.length);
 
-                } else if ($(".active").hasClass("widget")) {
+                } else if ($(".active").hasClass("widget_editor_widget_helper")) {
                     // Set Widget ID to variable 'RemovalID'
                     var RemovalID = $(".active").attr('id');
 
@@ -126,10 +114,8 @@
                     console.log("Number of Widget Helpers: " + widgetHelpers.length);
                 }
             }
-        });
 
-
-        $(document).keyup(function (e) {
+            // When END key is Pressed (DEBUGGING ONLY, REMOVE FOR PRODUCTION)
             if (e.which == 35) {
                 
                 console.log("All output connections: ");
@@ -150,135 +136,137 @@
             }
         });
 
-        function getTableData(TableID) {
-            var Data = JSON.stringify(myAppendGrid[tables.indexOf(TableID)].getAllValue(), null, "");
-            return Data;
-        }
+    function getTableData(TableID) {
+        var Data = JSON.stringify(myAppendGrid[tables.indexOf(TableID)].getAllValue(), null, "");
+        return Data;
+    }
 
-        //Create a new Table Code
-        function createTable() {
-            // Create element id based on current iteration
-            var $TableID = "widget_table-" + $table_iteration;
+    //Create a new Table Code
+    function createTable() {
+        // Create element id based on current iteration
+        var $TableID = "widget_helper_table-" + $table_iteration;
 
-            // Create the HTML table element with the Element ID we made above
-            var $table = $('<table class="WidgetTable" id="' + $TableID + '"></table > ');
+        // Create the HTML table element with the Element ID we made above
+        var $table = $('<table class="widget_helper_table" id="' + $TableID + '"></table > ');
 
-            // Add the HTML table to the widget editor
-            $table.appendTo('#widget-editor-area');
+        // Add the HTML table to the widget editor
+        $table.appendTo('#widget-editor-area');
 
-            drawEndPoints($TableID, "Right", true);
+        drawEndPoints($TableID, "Right", true);
 
-            // Make the table draggable and contain it to the widget editor
-            $($table).draggable({
-                containment: "#widget-editor-area",
-                cursor: "move",
-                grid: [20, 20],
-                drag: function () {
-                    jsPlumb.repaintEverything();
-                    //console.log("jsplumb repainting");
-                    //jsPlumb.repaint($(this));
+        // Make the table draggable and contain it to the widget editor
+        makeDraggable($table);
 
-                }
-            });
+        // if hovered then it has class active
+        $table.hover(function () {
+            $(this).toggleClass('active'); 
+        });
 
-            $table.hover(function () {
-                $(this).toggleClass('active'); // if hovered then it has class active
-                // console.log("ID: " + $(".active").attr('id'));
-            });
+        // Apend the grid information to the table element
+        myAppendGrid[tables.length] = new AppendGrid({
+            element: $TableID,
+            columns: [
+                { name: "s_name", display: "Student Name"},
+                { name: "s_course", display: "Course" },
+                { name: "s_grade", display: "Grade" }
+            ]
+        })
 
+        // Add table to list of tables for record keeping
+        tables.push($TableID);
 
-            // Apend the grid information to the table element
-            myAppendGrid[tables.length] = new AppendGrid({
-                element: $TableID,
-                columns: [
-                    { name: "s_name", display: "Student Name"},
-                    { name: "s_course", display: "Course" },
-                    { name: "s_grade", display: "Grade" }
-                ]
-            })
+        // Update the iteration count for the next table
+        $table_iteration++;
+    }
 
-            // Add table to list of tables for record keeping
-            tables.push($TableID);
-
-            // Update the iteration count for the next table
-            $table_iteration++;
-        }
-
-
-        function drawEndPoints(id, endpointposition, isSource) {
-
-            var endpointSource = {
-                isSource: true,
-                isTarget: false,
-                endpoint: ["Rectangle", {
-                    width: 40,
-                    height: 40
-                }],
-                style: {
-                    fillStyle: 'red'
-
-                },
-                maxConnections: -1,
-                connector: "Bezier",
-                connectorStyle: {
-                    lineWidth: 5,
-                    strokeStyle: '#040469'
-                },
-                scope: "blackline",
-                dropOptions: {
-                    drop: function (e, ui) {
-                        $("#flashing_text").text('Unable to connect two tables together...');
-                        $("#flashing_text").slideDown(function () {
-                            setTimeout(function () {
-                                $("#flashing_text").slideUp();
-                            }, 2500);
-                        });
-
-                    }
-                }
-            };
-
-            var endpointDestination = {
-                isSource: false,
-                isTarget: true,
-                endpoint: ["Dot", {
-                    radius: 15
-                }],
-                style: {
-                    fillStyle: 'red'
-
-                },
-                maxConnections: 1,
-                connector: "Bezier",
-                connectorStyle: {
-                    lineWidth: 5,
-                    strokeStyle: '#040469'
-                },
-                scope: "blackline",
-                dropOptions: {
-                    drop: function (e, ui) {
-                        $("#flashing_text").text('One table connection maximum...');
-                        $("#flashing_text").slideDown(function () {
-                            setTimeout(function () {
-                                $("#flashing_text").slideUp();
-                            }, 2500);
-                        });
-                    }
-                }
-            };
-
-            if (isSource == true) {
-                jsPlumb.addEndpoint($("#" + id), {
-                    anchor: endpointposition
-                }, endpointSource);
-            } else if (isSource == false) {
-                jsPlumb.addEndpoint($("#" + id), {
-                    anchor: endpointposition
-                }, endpointDestination);
+    // ----------- Helper Functions ------------------
+    // Make Widget Draggable
+    function makeDraggable($item) {
+        $item.draggable({
+            cursor: "move",
+            grid: [20, 20],
+            containment: "#widget-editor-area",
+            drag: function () {
+                jsPlumb.repaintEverything();
+                //console.log("jsplumb repainting");
+            },
+            start: function () { },
+            stop: function () {
+                console.log('stopped')
             }
+        });
+    }
+    function drawEndPoints(id, endpointposition, isSource) {
+        var endpointSource = {
+            isSource: true,
+            isTarget: false,
+            endpoint: ["Rectangle", {
+                width: 40,
+                height: 40
+            }],
+            style: {
+                fillStyle: 'red'
+
+            },
+            maxConnections: -1,
+            connector: "Bezier",
+            connectorStyle: {
+                lineWidth: 5,
+                strokeStyle: '#040469'
+            },
+            scope: "blackline",
+            dropOptions: {
+                drop: function (e, ui) {
+                    $("#flashing_text").text('Unable to connect two tables together...');
+                    $("#flashing_text").slideDown(function () {
+                        setTimeout(function () {
+                            $("#flashing_text").slideUp();
+                        }, 2500);
+                    });
+
+                }
+            }
+        };
+
+        var endpointDestination = {
+            isSource: false,
+            isTarget: true,
+            endpoint: ["Dot", {
+                radius: 15
+            }],
+            style: {
+                fillStyle: 'red'
+
+            },
+            maxConnections: 1,
+            connector: "Bezier",
+            connectorStyle: {
+                lineWidth: 5,
+                strokeStyle: '#040469'
+            },
+            scope: "blackline",
+            dropOptions: {
+                drop: function (e, ui) {
+                    $("#flashing_text").text('One table connection maximum...');
+                    $("#flashing_text").slideDown(function () {
+                        setTimeout(function () {
+                            $("#flashing_text").slideUp();
+                        }, 2500);
+                    });
+                }
+            }
+        };
+
+        if (isSource == true) {
+            jsPlumb.addEndpoint($("#" + id), {
+                anchor: endpointposition
+            }, endpointSource);
+        } else if (isSource == false) {
+            jsPlumb.addEndpoint($("#" + id), {
+                anchor: endpointposition
+            }, endpointDestination);
         }
-
-
+    }
     </script>
 }
 
@@ -325,24 +313,34 @@
 
     <div id="widget-editor-side-bar">
 
-        <div class="sidebar_widget" id="helper_widget_function_add">
-            <img src="~/Images/addoutput.png" alt="addOutput_btn">
-            <div class="sidebar_widget-value_box" id="add_output_value">add_output_value</div>
+        <div class="sidebar_widget_helper" id="helper_widget_function_add">
+            <!-- <img src="~/Images/addoutput.png" alt="addOutput_btn"> -->
+            <h1 class="widget_helper_heading">Add</h1>
+            <div class="sidebar_widget_helper_dropdown">
+                <select name="add" class="widget_helper_dropdown">Select Column</select>
+            </div>
+            <div class="widget_helper_function_output"></div>
         </div>
 
-        <div class="sidebar_widget" id="helper_widget_function_avg">
-            <img src="~/Images/avgoutput.png" alt="avgOutput_btn">
-            <div class="sidebar_widget-value_box" id="avg_output_value">avg_output_value</div>
+        <div class="sidebar_widget_helper" id="helper_widget_function_avg">
+            <!-- <img src="~/Images/avgoutput.png" alt="avgOutput_btn"> -->
+            <h1 class="widget_helper_heading">Average</h1>
+            <div class="sidebar_widget_helper_dropdown">
+                <select name="add" class="widget_helper_dropdown">Select Column</select>
+            </div>
+            <div class="widget_helper_function_output"></div>
         </div>
 
-        <div class="sidebar_widget" id="helper_widget_graph_bar">
-            <img src="~/Images/bargraph.png" alt="barGraph_btn">
-            <div class="sidebar_widget-value_box" id="bargraph_value">bargraph_value</div>
+        <div class="sidebar_widget_helper" id="helper_widget_graph_bar">
+            <!-- <img src="~/Images/bargraph.png" alt="barGraph_btn"> -->
+            <h1 class="widget_helper_heading">Bar Graph</h1>
+            <div class="widget_helper_graph_output"></div>
         </div>
 
-        <div class="sidebar_widget" id="helper_widget_graph_pie">
-            <img src="~/Images/piechart.png" alt="pieChart_btn">
-            <div class="sidebar_widget-value_box" id="piechart_value">piechart_value</div>
+        <div class="sidebar_widget_helper" id="helper_widget_graph_pie">
+            <!-- <img src="~/Images/piechart.png" alt="pieChart_btn"> -->
+            <h1 class="widget_helper_heading">Pie Chart</h1>
+            <div class="widget_helper_graph_output"></div>
         </div>
 
     </div>
