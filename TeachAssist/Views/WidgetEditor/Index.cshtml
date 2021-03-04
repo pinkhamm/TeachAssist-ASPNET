@@ -13,11 +13,10 @@
         //Drag and drop elements from the sidebar code
 
         //Global variables for ID iteration on html elements
-
         $table_iteration = 0;
         $widget_iteration = 0;
         var myAppendGrid = [];
-        var myAppendGridID = [];
+        var tables = [];
 
         jsPlumb.setContainer($("body"));
 
@@ -44,23 +43,18 @@
                 accept: ".sidebar_widget",
                 drop: function (event, ui) {
                     var $WidgetID = "widget-" + $widget_iteration;
-
                     if (ui.draggable.hasClass("sidebar_widget")) {
                         var $item = $(ui.draggable).clone().attr('id', $WidgetID).appendTo("#widget-editor-area").css({
                             position: 'absolute',
                         });
-
                         $item.addClass("widget");
-
                         $widget_iteration++;
-
                         drawEndPoints($WidgetID, "Left", false);
-
-
                         $item.removeClass("sidebar_widget");
                         makeDraggable($item);
                     }
 
+                    // Make Widget Draggable and Add JSPlumb
                     function makeDraggable($item) {
                         $item.draggable({
                             cursor: "move",
@@ -69,7 +63,6 @@
                             drag: function () {
                                 jsPlumb.repaintEverything();
                                 //console.log("jsplumb repainting");
-
                             },
                             start: function () { },
                             stop: function () {
@@ -77,14 +70,11 @@
                             }
                         });
 
-
-
+                        // When Item is hovered over, change class
                         $item.hover(function () {
-                            $(this).toggleClass('active'); // if hovered then it has class active
+                            $(this).toggleClass('active');
                             console.log("ID: " + $(".active").attr('id'));
                         });
-
-
                     }
                 }
             });
@@ -95,38 +85,32 @@
         $(document).keyup(function (e) {
             if (e.which == 46) {
                 if ($(".active").hasClass("WidgetTable")) {
+                    // Set Table ID to variable 'RemovalID'
+                    var RemovalID = $(".active").attr('id');
 
-                    //var tempID = $(".active").attr('id');
-                    //var tablenumber = tempID.substring(tempID.indexOf('-') + 1);
-                    //console.log(tablenumber);
+                    // Remove Append Grid with Table Index
+                    myAppendGrid.splice(tables.indexOf(RemovalID), 1);
 
-                    for (var x = 0; x < myAppendGrid.length; x++) {
-                        var SelectedTableID = $(".active").attr('id');
-                        if (myAppendGridID[x] == SelectedTableID) {
-                            console.log("Deleted Grid object: " + SelectedTableID);
-                            myAppendGrid.splice(x, 1)
-                            myAppendGridID.splice(x, 1);
-                            break;
-                        }
-                    }
+                    // Remove Table from the list of Tables
+                    tables.splice(tables.indexOf(RemovalID), 1);
 
-                    console.log("Item deleted was a table");
+                    // Remove Table from DOM
+                    var Table = document.getElementById(RemovalID);
+                    Table.remove();
 
+                    // Log Table Deletion with Console
+                    console.log("Item deleted was a table: " + RemovalID);
 
                 } else if ($(".active").hasClass("widget")) {
-
-
                     console.log("Item deleted was a widget");
-
-
                 }
-                jsPlumb.remove($(".active").attr('id'));
             }
         });
 
 
         $(document).keyup(function (e) {
             if (e.which == 35) {
+                /*
                 console.log("All output connections: ");
                 var con = jsPlumb.getAllConnections();
                 for (var i = 0; i < con.length; i++) {
@@ -136,10 +120,19 @@
                     console.log(myAppendGrid[i].getCtrlValue("s_grade", 0));
                 }
                 myAppendGrid.forEach(item => console.log(item));
+                */
 
+                // For Each table, get its data and print it to the log
+                for (var x = 0; x < tables.length; x++) {
+                    console.log("TABLE " + tables[x] + ": " + getTableData(tables[x]) + "\n");
+                }
             }
         });
 
+        function getTableData(TableID) {
+            var Data = JSON.stringify(myAppendGrid[tables.indexOf(TableID)].getAllValue(), null, "");
+            return Data;
+        }
 
         //Create a new Table Code
         function createTable() {
@@ -149,15 +142,10 @@
             // Create the HTML table element with the Element ID we made above
             var $table = $('<table class="WidgetTable" id="' + $TableID + '"></table > ');
 
-            myAppendGridID.push($TableID);
-
-            //$table.addClass("isTable");
-
             // Add the HTML table to the widget editor
             $table.appendTo('#widget-editor-area');
 
             drawEndPoints($TableID, "Right", true);
-
 
             // Make the table draggable and contain it to the widget editor
             $($table).draggable({
@@ -174,34 +162,25 @@
 
             $table.hover(function () {
                 $(this).toggleClass('active'); // if hovered then it has class active
-                console.log("ID: " + $(".active").attr('id'));
+                // console.log("ID: " + $(".active").attr('id'));
             });
 
 
             // Apend the grid information to the table element
-            myAppendGrid[$table_iteration] = new AppendGrid({
+            myAppendGrid[tables.length] = new AppendGrid({
                 element: $TableID,
                 columns: [
-                    { name: "s_name", display: "Student Name", value: "Enter a name..." },
+                    { name: "s_name", display: "Student Name"},
                     { name: "s_course", display: "Course" },
                     { name: "s_grade", display: "Grade" }
-                ],
-                afterRowAppended: function (caller, parentRowIndex, addedRowIndex) {
-                    // Make sure AppendGrid is initialized
-                    if (myAppendGrid[$table_iteration]) {
-                        // Copy data of `Foo` from parent row to new added rows
-                        var parentValue = myAppendGrid[$table_iteration].getCtrlValue("s_name", parentRowIndex);
-                        for (var z = 0; z < addedRowIndex.length; z++) {
-                            myAppendGrid[$table_iteration].setCtrlValue("s_name", addedRowIndex[z], parentValue);
-                        }
-                    }
-                }
+                ]
+            })
 
-            });
+            // Add table to list of tables for record keeping
+            tables.push($TableID);
 
             // Update the iteration count for the next table
             $table_iteration++;
-
         }
 
 
