@@ -118,7 +118,7 @@
 
                     // Remove Widget Helper from DOM
                     var WidgetH = document.getElementById(RemovalID);
-                    WidgetH.remove();
+                    jsPlumb.remove(WidgetH);
 
                     // Log Widget Hepler Deletion with Console
                     console.log("Item deleted was a WidgetHelper: " + RemovalID);
