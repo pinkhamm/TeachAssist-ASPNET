@@ -24,7 +24,7 @@
 
     jsPlumb.ready(function () {
         // Make Widget helpers draggable
-        $(".sidebar_widget").draggable(
+        $(".sidebar_widget_helper").draggable(
             {
                 helper: "clone",
                 revert: "invalid",
@@ -45,10 +45,10 @@
         // Make the Widget editor area droppable
         $("#widget-editor-area").droppable(
             {
-                accept: ".sidebar_widget",
+                accept: ".sidebar_widget_helper",
                 drop: function (event, ui) {
                     // Make Widget Helper Clones
-                    if (ui.draggable.hasClass("sidebar_widget")) {
+                    if (ui.draggable.hasClass("sidebar_widget_helper")) {
                         // Set Appropriate Widget ID
                         var $WidgetID = ui.draggable.attr('id') + "-" + $widget_iteration;
                         widgetHelpers.push($WidgetID);
@@ -57,10 +57,10 @@
                                 position: 'absolute',
                             }
                         );
-                        $item.addClass("widget");
+                        $item.addClass("widget_editor_widget_helper");
                         $widget_iteration++;
                         drawEndPoints($WidgetID, "Left", false);
-                        $item.removeClass("sidebar_widget");
+                        $item.removeClass("sidebar_widget_helper");
                         makeDraggable($item);
 
                         // When Item is hovered over, change class
@@ -79,7 +79,7 @@
         function (e) {
             // When DEL key is Pressed
             if (e.which == 46) {
-                if ($(".active").hasClass("WidgetTable")) {
+                if ($(".active").hasClass("widget_helper_table")) {
                     // Set Table ID to variable 'RemovalID'
                     var RemovalID = $(".active").attr('id');
 
@@ -98,7 +98,7 @@
                     console.log("Number of Tables: " + tables.length);
                     console.log("Number of Grids (SHOULD BE THE SAME): " + myAppendGrid.length);
 
-                } else if ($(".active").hasClass("widget")) {
+                } else if ($(".active").hasClass("widget_editor_widget_helper")) {
                     // Set Widget ID to variable 'RemovalID'
                     var RemovalID = $(".active").attr('id');
 
@@ -144,10 +144,10 @@
     //Create a new Table Code
     function createTable() {
         // Create element id based on current iteration
-        var $TableID = "widget_table-" + $table_iteration;
+        var $TableID = "widget_helper_table-" + $table_iteration;
 
         // Create the HTML table element with the Element ID we made above
-        var $table = $('<table class="WidgetTable" id="' + $TableID + '"></table > ');
+        var $table = $('<table class="widget_helper_table" id="' + $TableID + '"></table > ');
 
         // Add the HTML table to the widget editor
         $table.appendTo('#widget-editor-area');
@@ -313,27 +313,31 @@
 
     <div id="widget-editor-side-bar">
 
-        <div class="sidebar_widget" id="helper_widget_function_add">
+        <div class="sidebar_widget_helper" id="helper_widget_function_add">
             <!-- <img src="~/Images/addoutput.png" alt="addOutput_btn"> -->
             <h1 class="widget_helper_heading">Add</h1>
-            <select name="add" class="widget_helper_dropdown"></select>
+            <div class="sidebar_widget_helper_dropdown">
+                <select name="add" class="widget_helper_dropdown">Select Column</select>
+            </div>
             <div class="widget_helper_function_output"></div>
         </div>
 
-        <div class="sidebar_widget" id="helper_widget_function_avg">
+        <div class="sidebar_widget_helper" id="helper_widget_function_avg">
             <!-- <img src="~/Images/avgoutput.png" alt="avgOutput_btn"> -->
             <h1 class="widget_helper_heading">Average</h1>
-            <select name="add" class="widget_helper_dropdown"></select>
+            <div class="sidebar_widget_helper_dropdown">
+                <select name="add" class="widget_helper_dropdown">Select Column</select>
+            </div>
             <div class="widget_helper_function_output"></div>
         </div>
 
-        <div class="sidebar_widget" id="helper_widget_graph_bar">
+        <div class="sidebar_widget_helper" id="helper_widget_graph_bar">
             <!-- <img src="~/Images/bargraph.png" alt="barGraph_btn"> -->
             <h1 class="widget_helper_heading">Bar Graph</h1>
             <div class="widget_helper_graph_output"></div>
         </div>
 
-        <div class="sidebar_widget" id="helper_widget_graph_pie">
+        <div class="sidebar_widget_helper" id="helper_widget_graph_pie">
             <!-- <img src="~/Images/piechart.png" alt="pieChart_btn"> -->
             <h1 class="widget_helper_heading">Pie Chart</h1>
             <div class="widget_helper_graph_output"></div>

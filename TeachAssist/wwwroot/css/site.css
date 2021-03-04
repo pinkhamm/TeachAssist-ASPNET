@@ -211,6 +211,44 @@ caption{
     cursor: grab;
 }*/
 
+.widget_helper_table {
+    border: 1px groove #040469;
+    border-radius: 10px;
+}
+
+.sidebar_widget_helper {
+    border: 1px groove #040469;
+    border-radius: 10px;
+}
+
+.widget_editor_widget_helper {
+    border: 1px groove #040469;
+    border-radius: 10px;
+}
+
+.widget_helper_heading {
+    text-align: center;
+}
+
+.widget_helper_function_output {
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.sidebar_widget_helper_dropdown {
+    width: 80%;
+}
+
+.sidebar_widget_helper select {
+    margin: auto;
+    width: 100%;
+}
+
+.widget_helper_graph_output {
+    min-width: 50px;
+    min-height: 50px;
+}
+
 
 /* SIDEBAR CSS - MAYBE MOVE TO SEPARATE STYLESHEET
 -------------------------------------------------- */
@@ -252,7 +290,7 @@ caption{
 
 
 /*Hover border colors*/
-.sidebar_widget:hover {
+.sidebar_widget_helper:hover {
     cursor: grab;
     border: 4px groove #040469;
     border-radius: 10px;
@@ -264,7 +302,7 @@ caption{
     border-radius: 10px;
 }
 
-.WidgetTable:hover {
+.widget_helper_table:hover {
     cursor: grab;
     border: 4px groove #040469;
     border-radius: 10px;
