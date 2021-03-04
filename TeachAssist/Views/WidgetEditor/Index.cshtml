@@ -17,6 +17,7 @@
         $widget_iteration = 0;
         var myAppendGrid = [];
         var tables = [];
+        var widgetHelpers = [];
 
         jsPlumb.setContainer($("body"));
 
@@ -42,7 +43,12 @@
             $("#widget-editor-area").droppable({
                 accept: ".sidebar_widget",
                 drop: function (event, ui) {
-                    var $WidgetID = "widget-" + $widget_iteration;
+
+                    // Set Appropriate Widget ID
+                    var $WidgetID = ui.draggable.attr('id') + "-" + $widget_iteration;
+                    widgetHelpers.push($WidgetID);
+
+                    // Make Widget Helper Clones
                     if (ui.draggable.hasClass("sidebar_widget")) {
                         var $item = $(ui.draggable).clone().attr('id', $WidgetID).appendTo("#widget-editor-area").css({
                             position: 'absolute',
@@ -100,9 +106,23 @@
 
                     // Log Table Deletion with Console
                     console.log("Item deleted was a table: " + RemovalID);
+                    console.log("Number of Tables: " + tables.length);
+                    console.log("Number of Grids (SHOULD BE THE SAME): " + myAppendGrid.length);
 
                 } else if ($(".active").hasClass("widget")) {
-                    console.log("Item deleted was a widget");
+                    // Set Widget ID to variable 'RemovalID'
+                    var RemovalID = $(".active").attr('id');
+
+                    // Remove Widget Helper from the list of WidgetHelpers
+                    widgetHelpers.splice(tables.indexOf(RemovalID), 1);
+
+                    // Remove Widget Helper from DOM
+                    var WidgetH = document.getElementById(RemovalID);
+                    WidgetH.remove();
+
+                    // Log Widget Hepler Deletion with Console
+                    console.log("Item deleted was a WidgetHelper: " + RemovalID);
+                    console.log("Number of Widget Helpers: " + widgetHelpers.length);
                 }
             }
         });
@@ -304,22 +324,22 @@
 
     <div id="widget-editor-side-bar">
 
-        <div class="sidebar_widget" id="add_output_btn">
+        <div class="sidebar_widget" id="helper_widget_add">
             <img src="~/Images/addoutput.png" alt="addOutput_btn">
             <div class="sidebar_widget-value_box" id="add_output_value">add_output_value</div>
         </div>
 
-        <div class="sidebar_widget" id="avg_output_btn">
+        <div class="sidebar_widget" id="helper_widget_output">
             <img src="~/Images/avgoutput.png" alt="avgOutput_btn">
             <div class="sidebar_widget-value_box" id="avg_output_value">avg_output_value</div>
         </div>
 
-        <div class="sidebar_widget" id="bar_graph_btn">
+        <div class="sidebar_widget" id="helper_widget_graph_bar">
             <img src="~/Images/bargraph.png" alt="barGraph_btn">
             <div class="sidebar_widget-value_box" id="bargraph_value">bargraph_value</div>
         </div>
 
-        <div class="sidebar_widget" id="pie_chart_btn">
+        <div class="sidebar_widget" id="helper_widget_graph_pie">
             <img src="~/Images/piechart.png" alt="pieChart_btn">
             <div class="sidebar_widget-value_box" id="piechart_value">piechart_value</div>
         </div>
