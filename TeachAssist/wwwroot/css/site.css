@@ -21,19 +21,19 @@ a {
 #user-account-btn{
     height: 65%;
     margin-right: 20px;
-    border: 3px solid #929eba;
-    color: black;
+    border: 3px solid #383a86;
+    color: #fffffa;
     font-weight: bold;
-    background-color: #929eba;
+    background-color: #383a86;
 }
 
 #user-settings-btn{
     height: 65%;
     margin-right: 20px;
-    border: 3px solid #929eba;
-    color: black;
+    border: 3px solid #383a86;
+    color: #fffffa;
     font-weight: bold;
-    background-color: #929eba;
+    background-color: #383a86;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -125,10 +125,10 @@ body {
     #action-menu button {
         height: 65%;
         margin-right: 20px;
-        border: 3px solid #929eba;
-        color: black;
+        border: 3px solid #383a86;
+        color: #fffffa;
         font-weight: bold;
-        background-color: #929eba;
+        background-color: #383a86;
         
     }
 
