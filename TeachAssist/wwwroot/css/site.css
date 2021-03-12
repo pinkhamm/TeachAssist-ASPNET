@@ -145,7 +145,7 @@ body {
 #widget-grid-area {
     float: left;
     background-color: white;
-    border: 4px groove black;
+    border: 4px groove #040469;
     border-radius: 5px;
     min-height: 500px;
     height: 100%;
@@ -175,7 +175,7 @@ body {
 #widget-editor-area {
     float: left;
     background-color: white;
-    border: 4px groove black;
+    border: 4px groove #040469;
     border-radius: 5px;
     min-height: 500px;
     height: 100%;
