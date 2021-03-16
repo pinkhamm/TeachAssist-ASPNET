@@ -9,7 +9,7 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: #040469;
 }
 
 .btn-primary {
@@ -93,7 +93,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-color: #fffffa;
+    background-color: #d9d9d9;
 }
 .footer {
   position: absolute;
@@ -156,7 +156,7 @@ body {
 #widget-selection-menu {
     display: inline;
     float: right;
-    background-color: white;
+    background-color: #d9d9d9;
     border: none;
     border-radius: 0px;
     min-height: 300px;
@@ -184,11 +184,13 @@ body {
 
 table, td, th {
     padding: 8px;
+    background-color: #cfcfde;
     border: 1px solid black;
 }
 
 table {
     border-collapse: collapse;
+    background-color: #cfcfde;
     margin: 0.5px;
     padding: 0.5em;
 }
@@ -212,17 +214,20 @@ caption{
 }*/
 
 .widget_helper_table {
-    border: 1px groove #040469;
+    border: 3px groove #cfcfde;
+    background-color: #cfcfde;
     border-radius: 10px;
 }
 
 .sidebar_widget_helper {
-    border: 1px groove #040469;
+    border: 3px groove #cfcfde;
+    background-color: #cfcfde;
     border-radius: 10px;
 }
 
 .widget_editor_widget_helper {
-    border: 1px groove #040469;
+    border: 3px groove #cfcfde;
+    background-color: #cfcfde;
     border-radius: 10px;
 }
 
@@ -241,11 +246,13 @@ caption{
 
 .sidebar_widget_helper select {
     margin: auto;
+    background-color: #cfcfde;
     width: 100%;
 }
 
 .widget_helper_graph_output {
     min-width: 50px;
+    background-color: #cfcfde;
     min-height: 50px;
 }
 
@@ -256,7 +263,7 @@ caption{
 #widget-editor-side-bar {
     display: inline;
     float: right;
-    background-color: white;
+    background-color: #d9d9d9;
     border: none;
     border-radius: 0px;
     min-height: 350px;
