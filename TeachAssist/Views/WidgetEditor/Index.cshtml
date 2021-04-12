@@ -23,6 +23,7 @@
     jsPlumb.setContainer($("body"));
 
     jsPlumb.ready(function () {
+        // jsPlumb.bind("connection", updateWidgets());
         // Make Widget helpers draggable
         $(".sidebar_widget_helper").draggable(
             {
@@ -59,7 +60,14 @@
                         );
                         $item.addClass("widget_editor_widget_helper");
                         $widget_iteration++;
-                        drawEndPoints($WidgetID, "Left", false);
+
+                        // Add Endpoints
+                        if ($WidgetID.includes("function")) {
+                            drawEndPoints($WidgetID, "Left", true, true);
+                        } else if ($WidgetID.includes("graph")) {
+                            drawEndPoints($WidgetID, "Left", false, true);
+                        }
+                        
                         $item.removeClass("sidebar_widget_helper");
                         makeDraggable($item);
 
@@ -117,7 +125,8 @@
 
             // When END key is Pressed (DEBUGGING ONLY, REMOVE FOR PRODUCTION)
             if (e.which == 35) {
-                
+
+                /*
                 console.log("All output connections: ");
                 var con = jsPlumb.getAllConnections();
                 for (var i = 0; i < con.length; i++) {
@@ -127,18 +136,43 @@
                     console.log(myAppendGrid[i].getCtrlValue("s_grade", 0));
                 }
                 myAppendGrid.forEach(item => console.log(item));
-                
+                */
 
                 // For Each table, get its data and print it to the log
                 for (var x = 0; x < tables.length; x++) {
                     console.log("TABLE " + tables[x] + ": " + getTableData(tables[x]) + "\n");
                 }
+
+                updateWidgets();
             }
         });
 
     function getTableData(TableID) {
         var Data = JSON.stringify(myAppendGrid[tables.indexOf(TableID)].getAllValue(), null, "");
         return Data;
+    }
+
+    function getColumnNamesFromTableID(TableID) {
+
+        var columns;
+
+        // Get Table Data from Table
+        var TableData = getTableData(TableID);
+
+        // Interpret JSON Data and output column names
+        var rows = TableData.split("},")
+        var rowOne = rows[0];
+        var res = rowOne.substring(2, rowOne.length);
+        var resColumns = res.split(",");
+        for (var i = 0; i < resColumns.length; i++) {
+            var columnName = resColumns[i].split(":");
+            var name = columnName[0].substring(1, columnName[0].length - 1);
+            console.log(i + ": " + name);
+            columns.push(name);
+        }
+
+
+        return columns;
     }
 
     //Create a new Table Code
@@ -152,7 +186,7 @@
         // Add the HTML table to the widget editor
         $table.appendTo('#widget-editor-area');
 
-        drawEndPoints($TableID, "Right", true);
+        drawEndPoints($TableID, "Right", true, false);
 
         // Make the table draggable and contain it to the widget editor
         makeDraggable($table);
@@ -177,6 +211,76 @@
 
         // Update the iteration count for the next table
         $table_iteration++;
+     }
+
+    function updateWidgets() {
+        var connections = jsPlumb.getAllConnections();
+        for (var i = 0; i < connections.length; i++) {
+            var source = connections[i].source.id;
+            var target = connections[i].target.id;
+
+            if (target.includes("function")) {
+                fillFunction(target, source);
+            } else if (target.includes("graph")) {
+                fillGraph(target, source);
+            }
+
+        }
+    }
+
+    function fillFunction(id, source) {
+        // Select DropDown Menu
+        var DropDownList = document.getElementById(id).getElementsByTagName('select');
+
+        // Grab Columns from source
+        // var columns = getColumnNamesFromTableID(source);
+
+        var columns = ["Grades"];
+
+        // Remove All dropdowns and append Column names to drop down list
+        for (var i = 0; i < columns.length; i++) {
+            console.log("Column " + i + ": " + columns[i]);
+            var option = document.createElement("option");
+            option.text = columns[i];
+            DropDownList[0].add(option);
+        }
+    }
+
+    function fillGraph(id, source) {
+        // Get Source Data
+
+        // Get Function and create values
+        var labels = ["A", "B", "D"];
+        var values = [2, 1, 1];
+        var average = "B"
+
+        // Send values to createGraph function
+        createBarGraph(id, "Average Grade: " + average, labels, values);
+    }
+
+    function createBarGraph(id, graphTitle, labels, values) {
+        var barGraph = new CanvasJS.Chart(id, {
+            theme: "light1",
+            animationEnabled: false,
+            title: {
+                text: graphTitle
+            },
+            data: [
+                {
+                    type: "column",
+                    dataPoints: [
+                    ]
+                }
+            ]
+        });
+
+        barGraph.render();
+
+        for (var i = 0; i < labels.length; i++) {
+            barGraph.data[0].addTo("dataPoints", { y: values[i], label: labels[i] });
+        }
+
+        barGraph.render();
     }
 
     // ----------- Helper Functions ------------------
@@ -196,7 +300,7 @@
             }
         });
     }
-    function drawEndPoints(id, endpointposition, isSource) {
+    function drawEndPoints(id, endpointposition, isSource, isTarget) {
         var endpointSource = {
             isSource: true,
             isTarget: false,
@@ -259,15 +363,21 @@
 
         if (isSource == true) {
             jsPlumb.addEndpoint($("#" + id), {
-                anchor: endpointposition
+                anchor: "Right"
             }, endpointSource);
-        } else if (isSource == false) {
+        }
+
+        if (isTarget == true) {
             jsPlumb.addEndpoint($("#" + id), {
-                anchor: endpointposition
+                anchor: "Left"
             }, endpointDestination);
         }
+
+        updateWidgets();
+
     }
     </script>
+
 }
 
 <div id="action-menu">
@@ -317,7 +427,7 @@
             <!-- <img src="~/Images/addoutput.png" alt="addOutput_btn"> -->
             <h1 class="widget_helper_heading">Add</h1>
             <div class="sidebar_widget_helper_dropdown">
-                <select name="add" class="widget_helper_dropdown">Select Column</select>
+                <select name="add" onchange="updateWidgets()" class="widget_helper_dropdown">Select Column</select>
             </div>
             <div class="widget_helper_function_output"></div>
         </div>

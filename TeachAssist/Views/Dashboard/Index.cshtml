@@ -2,6 +2,156 @@
     ViewData["Title"] = "Dashboard";
 }
 
+
+@section Scripts {
+
+    <script src="~/js/JQuery/jquery-1.12.4.js"></script>
+    <script src="~/js/JQuery/jquery-ui.js"></script>
+    <script src="~/js/JQuery/Plugins/jsPlumb.min.js"></script>
+    <script src="~/js/JQuery/Plugins/jquery.canvasjs.min.js"></script>
+    <script src="~/js/JQuery/Plugins/AppendGrid.js"></script>
+
+    <script>
+        //Drag and drop elements from the sidebar code
+
+        //Global variables for ID iteration on html elements
+        $table_iteration = 0;
+        $widget_iteration = 0;
+        var myAppendGrid = [];
+        var tables = [];
+        var widgetHelpers = [];
+
+        jsPlumb.setContainer($("body"));
+
+        jsPlumb.ready(function () {
+            // jsPlumb.bind("connection", updateWidgets());
+            // Make Widget helpers draggable
+            $(".sidebar_widget_helper").draggable(
+                {
+                    helper: "clone",
+                    revert: "invalid",
+                    appendTo: "#widget-grid-area",
+                    cursor: "move",
+                    drag: function () {
+                        jsPlumb.repaintEverything();
+                    },
+                    start: function () {
+                        console.log("dragging");
+                    },
+                    stop: function () {
+                        console.log('stopped');
+                    },
+                }
+            );
+
+            // Make the Widget editor area droppable
+            $("#widget-grid-area").droppable(
+                {
+                    accept: ".sidebar_widget_helper",
+                    drop: function (event, ui) {
+                        // Make Widget Helper Clones
+                        if (ui.draggable.hasClass("sidebar_widget_helper")) {
+                            // Set Appropriate Widget ID
+                            var $WidgetID = ui.draggable.attr('id') + "-" + $widget_iteration;
+                            widgetHelpers.push($WidgetID);
+                            var $item = $(ui.draggable).clone().attr('id', $WidgetID).appendTo("#widget-grid-area").css(
+                                {
+                                    position: 'absolute',
+                                }
+                            );
+                            $item.addClass("widget_editor_widget_helper");
+                            $widget_iteration++;
+
+                            $item.removeClass("sidebar_widget_helper");
+                            makeDraggable($item);
+
+                            // When Item is hovered over, change class
+                            $item.hover(function () {
+                                $(this).toggleClass('active');
+                                console.log("ID: " + $(".active").attr('id'));
+                            });
+                        }
+                    }
+                }
+            )
+        });
+
+        function fillFunction(id, source) {
+            // Select DropDown Menu
+            var DropDownList = document.getElementById(id).getElementsByTagName('select');
+
+            // Grab Columns from source
+            // var columns = getColumnNamesFromTableID(source);
+
+            var columns = ["Grades"];
+
+            // Remove All dropdowns and append Column names to drop down list
+            for (var i = 0; i < columns.length; i++) {
+                console.log("Column " + i + ": " + columns[i]);
+                var option = document.createElement("option");
+                option.text = columns[i];
+                DropDownList[0].add(option);
+            }
+        }
+
+        function fillGraph() {
+            // Get Source Data
+
+            // Get Function and create values
+            var labels = ["A", "B", "D"];
+            var values = [2, 1, 1];
+            var average = "B"
+
+            // Send values to createGraph function
+            createBarGraph("widget-1", "Average Grade: " + average, labels, values);
+        }
+
+        function createBarGraph(id, graphTitle, labels, values) {
+            var barGraph = new CanvasJS.Chart(id, {
+                theme: "light1",
+                animationEnabled: false,
+                title: {
+                    text: graphTitle
+                },
+                data: [
+                    {
+                        type: "column",
+                        dataPoints: [
+                        ]
+                    }
+                ]
+            });
+
+            barGraph.render();
+
+            for (var i = 0; i < labels.length; i++) {
+                barGraph.data[0].addTo("dataPoints", { y: values[i], label: labels[i] });
+            }
+
+            barGraph.render();
+        }
+
+        // ----------- Helper Functions ------------------
+        // Make Widget Draggable
+        function makeDraggable($item) {
+            $item.draggable({
+                cursor: "move",
+                grid: [20, 20],
+                containment: "#widget-grid-area",
+                drag: function () {
+                    jsPlumb.repaintEverything();
+                    //console.log("jsplumb repainting");
+                },
+                start: function () { },
+                stop: function () {
+                    console.log('stopped')
+                }
+            });
+        }
+    </script>
+
+}
+
 <div id="action-menu">
 
     <button id="new_widget_btn" onclick="window.location = '@Url.Action("Index", "WidgetEditor")'">New Widget</button>
@@ -13,6 +163,11 @@
 
     </div>
     <div id="widget-selection-menu">
-        <p>No Saved Widgets</p>
+        <h1>Saved Widgets</h1>
+        <div class="sidebar_widget_helper" id="widget-1" onload="fillGraph()">
+            <!-- <img src="~/Images/piechart.png" alt="pieChart_btn"> -->
+            <h1 class="widget_helper_heading">Widget-1</h1>
+            <div class="widget_helper_graph_output"></div>
+        </div>
     </div>
 </div>

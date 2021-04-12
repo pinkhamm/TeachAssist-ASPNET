@@ -16,14 +16,16 @@ namespace TeachAssist.Controllers
             return View();
         }
 
-        public void SaveWidget()
+        public ActionResult SaveWidget()
         {
-
+            ViewBag.Message = "Widget Saved!";
+            return View();
         }
 
-        public void DeleteWidget()
+        public ActionResult DeleteWidget()
         {
-
+            ViewBag.Message = "Widget Deleted.";
+            return View();
         }
     }
 }
